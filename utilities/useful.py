@@ -1,26 +1,41 @@
 import math
+from collections import namedtuple
 
-def dist(x1, y1, x2, y2):
+Point = namedtuple('Point', ['x', 'y'])
+
+def _dist(x1, y1, x2, y2):
 	dx = x2 - x1
 	dy = y2 - y1
 	return math.sqrt(dx*dx + dy*dy)
 
-def ang_rad(x1, y1, x2, y2):
+def dist(p1, p2):
+	return _dist(p1.x, p1.y, p2.x, p2.y)
+
+def _ang_rad(x1, y1, x2, y2):
 	dx = x2 - x1
 	dy = y2 - y1
 	return math.atan2(dy, dx)
 
-def ang_deg(x1, y1, x2, y2):
+def ang_rad(p1, p2):
+	return _ang_rad(p1.x, p1.y, p2.x, p2.y)
+
+def _ang_deg(x1, y1, x2, y2):
 	dx = x2 - x1
 	dy = y2 - y1
 	return math.atan2(dy, dx) * 180.0/math.pi
 
-def point_in_rect(x, y, rx, ry, rw, rh):
+def ang_deg(p1, p2):
+	return _ang_deg(p1.x, p1.y, p2.x, p2.y)
+
+def _point_in_rect(x, y, rx, ry, rw, rh):
 	x_col = (x >= rx and x <= (rx+rw))
 	y_col = (y >= ry and y <= (ry+rh))
 	return x_col and y_col
 
-def rect_collide(x1, y1, w1, h1, x2, y2, w2, h2):
+def point_in_rect(point, corner, w, h):
+	return _point_in_rect(point.x, point.y, corner.x, corner.y, w, h)
+
+def _rect_collide(x1, y1, w1, h1, x2, y2, w2, h2):
 	left1 = x1
 	right1 = x1+w1
 	top1 = y1+h1
@@ -35,6 +50,9 @@ def rect_collide(x1, y1, w1, h1, x2, y2, w2, h2):
 		 right2 < left1 or
 		 top2 > bottom1 or
 		 bottom2 < top1)
+
+def rect_collide(corner1, w1, h1, corner2, w2, h2):
+	return _rect_collide(corner1.x, corner1.y, w1, h1, corner2.x, corner2.y, w2, h2)
 
 def rockstar():
 	print r'''cccllllllooo0OkkkkkkkkkkkkkOOOOOOO00000KKKXXNNWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNNXX
