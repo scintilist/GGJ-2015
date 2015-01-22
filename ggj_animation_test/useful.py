@@ -23,13 +23,13 @@ def point_in_rect(x, y, rx, ry, rw, rh):
 def rect_collide(x1, y1, w1, h1, x2, y2, w2, h2):
 	left1 = x1
 	right1 = x1+w1
-	top1 = y1
-	bottom1 = y1+h1
+	top1 = y1+h1
+	bottom1 = y1
 
 	left2 = x2
 	right2 = x2+w2
-	top2 = y2
-	bottom2 = y2+h2
+	top2 = y2+h2
+	bottom2 = y2
 
 	return !(left2 > right1 or
 		 right2 < left1 or
