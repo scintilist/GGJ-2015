@@ -5,9 +5,9 @@ from pyglet.gl import *
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 
 window = pyglet.window.Window(config=config, 
-	height=800, width=600, # Windowed
-	fullscreen=True, # Fullscreen
-	#resizable=True
+	height=600, width=800, # Windowed
+	#fullscreen=True, # Fullscreen
+	resizable=True
 	)
 
 # Background color
@@ -44,5 +44,5 @@ def update(realtime_dt):
 
 pyglet.clock.schedule_interval(update, 1/120) # Game time step
 
-window.push_handlers(event_handlers.EventHandlers())
+#window.push_handlers()
 pyglet.app.run() # Run pyglet
