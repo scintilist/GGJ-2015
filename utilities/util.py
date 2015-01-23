@@ -1,6 +1,9 @@
 import math
 from collections import namedtuple
 
+def constrain(v, mn, mx):
+	return max(mn, min(mx, v))
+
 Point = namedtuple('Point', ['x', 'y'])
 
 def _dist(x1, y1, x2, y2):
