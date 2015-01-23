@@ -1,4 +1,10 @@
 import pyglet
+from pyglet.gl import *
+from pyglet import clock
+from pyglet import event
+from pyglet import graphics
+from pyglet import image
+from pyglet.sprite import SpriteGroup
 
 class Anim_Sprite(pyglet.sprite.Sprite):
 
@@ -30,9 +36,25 @@ class Anim_Sprite(pyglet.sprite.Sprite):
 		else:
 			self.dispatch_event('on_animation_end')
 
-	def set_frame(self, i):
+	def _set_texture(self, texture):
+		if texture is not self._texture: # if texture.id is not self._texture.id:
+			self._group = SpriteGroup(texture,
+					self._group.blend_src,
+					self._group.blend_dest,
+					self._group.parent)
+			if self._batch is None:
+				self._vertex_list.tex_coords[:] = texture.tex_coords
+			else:
+				self._vertex_list.delete()
+				self._texture = texture
+				self._create_vertex_list()
+		else:
+			self._vertex_list.tex_coords[:] = texture.tex_coords
+		self._texture = texture
+
+	def set_frame(self, i): # Indexed base 1 for consistency with frame import numbering
 		''' Seek to the specified frame '''
-		self._frame_index = min(max(i, 0), len(self._animation.frames) - 1)
+		self._frame_index = min(max(i-1, 0), len(self._animation.frames) - 1)
 		frame = self._animation.frames[self._frame_index]
 		if self._paused:
 			self._set_texture(frame.image.get_texture())
