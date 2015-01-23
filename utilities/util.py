@@ -1,6 +1,28 @@
 import math
 from collections import namedtuple
 
+import pyglet
+
+# Animation/images
+
+def center_image(image):
+    '''Sets an image's anchor point to its center'''
+    image.anchor_x = image.width/2
+    image.anchor_y = image.height/2
+
+def get_frame_list(fn_base, frame_count = 0, num_digits = 2, center = False):
+	fn, ext = fn_base.split('.')
+	frame_list = []
+	for i in range(1, frame_count+1):
+		name = '{}{:0{}}.{}'.format(fn, i, num_digits, ext)
+		img = pyglet.resource.image(name)
+		if(center):
+			center_image(img)
+		frame_list.append(img)
+	return frame_list
+
+# Geometry
+
 def constrain(v, mn, mx):
 	return max(mn, min(mx, v))
 
@@ -58,7 +80,7 @@ def rect_collide(corner1, w1, h1, corner2, w2, h2):
 	return _rect_collide(corner1.x, corner1.y, w1, h1, corner2.x, corner2.y, w2, h2)
 
 def rockstar():
-	print r'''cccllllllooo0OkkkkkkkkkkkkkOOOOOOO00000KKKXXNNWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNNXX
+	print(r'''cccllllllooo0OkkkkkkkkkkkkkOOOOOOO00000KKKXXNNWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNNXX
 ccllllllloo0KK0OOOkOOOOOOOOOOOOOOO000000KKKXXNNWWMMMMMMMMMMMMMMMMMMMMMMMWWNXXKK00
 llllllloooxWNNXXK0OOOOOOOOOOOOOOOO0000000KKKKXXXNNWWWMMMWWNNXMMMMMNNXXKKK000OOOOO
 clllllllllkNWWNNXK00000OOOOOOOOOOOOO00000000000KKKKKKKK00OOOOXNNNK00OOOkkkkkkkkkx
@@ -111,4 +133,4 @@ ccccccc,```..........``````'...'.....';,'...',,'',,,,;;;:clc,',;:oxOOOOOOOOOO0Ok
 ,,..,,;,,,;okOxodoooooO0c..........................'',,,;;;:ldxxkkkkxxxxkkkOOOOkk
 '....```;:cxOOxoooooooxk'........................'',,,,,,,::ldxxxxxxdxkkOkkkkkxxk
 '..';;::cccdOOxloooolloo'.....................```'',,,,,,;,.:lxxxxxxxkxxkkkkxxxkx
-....,;:::ccdOOxclllllloo......................```',,,,,,,,'';,xdxkkkkkxxxdddxxxkk'''
+....,;:::ccdOOxclllllloo......................```',,,,,,,,'';,xdxkkkkkxxxdddxxxkk''')
