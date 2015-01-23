@@ -53,7 +53,7 @@ def center_image(image):
 center_image(rockstar_guy_img)
 
 # Create game object from image
-rockstar_guy_obj = game_obj.Rockstar(rockstar_guy_img, window.width/2, window.height/2)
+rockstar_guy_obj = game_obj.Rockstar(rockstar_guy_img, None, window.width/2, window.height/2)
 
 pyglet.clock.schedule_interval(update, 1/120) # Game time step
 
