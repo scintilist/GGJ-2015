@@ -12,7 +12,7 @@ STATE_FREEMOVE = 0
 STATE_DIALOG = 1
 
 class Room:
-	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, record = PublicRecord(), room_name = "default_room"):
+	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, record = PublicRecord(), room_name = "default_room", start_x = 50, start_y = 50):
 		self.g_scale = g_scale
 		self.width = width
 		self.height = height
@@ -61,8 +61,8 @@ class Room:
 			self.player.x = pos[0]
 			self.player.y = pos[1]
 		else:
-			self.player.x = 50
-			self.player.y = 50
+			self.player.x = start_x
+			self.player.y = start_y
 
 		# Do we need this? Maybe do this if it's slow to load
 		'''for obj in objects:
@@ -225,7 +225,7 @@ class Room:
 		
 class GameRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, record, room_name = "rockstar")
+		super().__init__(width, height, g_scale, window, record, room_name = "rockstar", start_x = 300, start_y = 300)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
