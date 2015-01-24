@@ -32,8 +32,8 @@ class Room:
 			layer = pyglet.graphics.OrderedGroup(i)
 			self.layers.append(layer)
 
-		self.player.sprite.batch = self.batch
-		self.player.sprite.group = self.layers[self.player_layer]
+		'''self.player.sprite.batch = self.batch
+		self.player.sprite.group = self.layers[self.player_layer]'''
 
 		self.bottom_left = util.Point(0, 0)
 		self.top_right = util.Point(width, height)
@@ -43,6 +43,10 @@ class Room:
 		
 		# Event handlers
 		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
+
+	def activate_room(self):
+		self.player.sprite.batch = self.batch
+		self.player.sprite.group = self.layers[self.player_layer]
 		
 	def get_resources(self):
 		pass
