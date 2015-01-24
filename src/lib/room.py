@@ -12,7 +12,7 @@ STATE_DIALOG = 1
 
 class Room:
 	
-	def __init__(self, width = 1920, height = 1080, player = None, g_scale = 1.0, window = None):
+	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None):
 		self.g_scale = g_scale
 		self.width = width
 		self.height = height
@@ -23,7 +23,9 @@ class Room:
 		self.state = STATE_FREEMOVE
 		
 		# Player is a game object w/ event handlers
-		self.player = player
+		# self.player = player
+		player_img = pyglet.resource.image("num01.png")
+		self.player = game_obj.Player(player_img, None, x = 50, y = 50, g_scale = g_scale)
 
 		# Batches ain't shit but groups and tricks
 		self.batch = pyglet.graphics.Batch()
@@ -42,7 +44,7 @@ class Room:
 		self.top_right = util.Point(width, height)
 
 		# List of game_obj; everything in the room that isn't bg
-		self.objects = [player]
+		self.objects = [self.player]
 		
 		# Event handlers
 		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
@@ -197,8 +199,8 @@ class Room:
 		
 		
 class GameRoom(Room):
-	def __init__(self, width, height, player, g_scale = 1.0, window = None):
-		super().__init__(width, height, player, g_scale, window)
+	def __init__(self, width, height, g_scale = 1.0, window = None):
+		super().__init__(width, height, g_scale, window)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
@@ -218,8 +220,8 @@ class GameRoom(Room):
 			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
 
 class TestRoom(Room):
-	def __init__(self, width, height, player, g_scale = 1.0, window = None):
-		super().__init__(width, height, player, g_scale, window)
+	def __init__(self, width, height, g_scale = 1.0, window = None):
+		super().__init__(width, height, g_scale, window)
 
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")

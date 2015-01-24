@@ -8,8 +8,8 @@ from . import game_obj
 from .room import *
 
 class PlaceholderRoom(Room):
-	def __init__(self, width, height, player, g_scale = 1.0, window = None):
-		super().__init__(width, height, player, g_scale, window)
+	def __init__(self, width, height, g_scale = 1.0, window = None):
+		super().__init__(width, height, g_scale, window)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("PlaceHolderRoomBackground01.png")
