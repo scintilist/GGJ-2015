@@ -27,10 +27,11 @@ class Game_Obj():
 		self.sprite.visible = self.visible
 		self.sprite.opacity = self.opacity
 		
-def Player(Game_Obj):
+class Player(Game_Obj):
 	''' Player character'''
 	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
 		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
+		pass
 		
 	def update(self, dt):
 		pass
