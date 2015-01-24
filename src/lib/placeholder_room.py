@@ -7,6 +7,7 @@ from . import util
 from . import game_obj
 from .room import *
 from .public_record import PublicRecord
+from .base_npc import NPC
 
 class PlaceholderRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
@@ -28,13 +29,14 @@ class PlaceholderRoom(Room):
 		# Create animation from file
 		# self.place_animation = util.make_animation('num.png', frame_count = 6, num_digits = 2, center = True, loop = True, duration = .4)
 		self.place_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
-		
+
+		self.rockstar_npc_img = pyglet.resource.image("rockstarguy.jpg")
+
 	def build_objects(self):
 		# Create animated room object from animation
 		obj = game_obj.Game_Obj(self.place_animation, batch = self.batch, group = self.layers[1], 
-			x = 100, y = 200, g_scale = self.g_scale, scale = 2)
-
+			x = 100, y = 200, g_scale = self.g_scale, scale = 2, room = self)
 		self.objects.append(obj)
-		
 
-		
+		npc = NPC(self.rockstar_npc_img, batch = self.batch, group = self.layers[self.player_layer-1], x = 600, y = 50, g_scale = self.g_scale, scale = 1, room = self)
+		self.objects.append(npc)

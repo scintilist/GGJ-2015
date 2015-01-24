@@ -55,16 +55,6 @@ class Game_Obj():
 		self.sprite.visible = self.visible
 		self.sprite.opacity = self.opacity
 
-	def mouse_click(self, x, y):
-		if self.room is None:
-			print("no room")
-		if self.room.player is None:
-			print("no player")
-		if util._dist(self.x, self.y, self.room.player.x, self.room.player.y) < 300:
-			print("DIALOG")
-		else:
-			print("NO DIALOG")
-
 STILL = 1
 BOTH_DOWN = 2
 WALK_LEFT = 3
