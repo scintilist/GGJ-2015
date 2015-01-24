@@ -6,17 +6,19 @@ from pyglet.window import mouse
 from . import util
 from . import game_obj
 from . import roomchangedispatcher
+from .public_record import PublicRecord
 
 STATE_FREEMOVE = 0
 STATE_DIALOG = 1
 
 class Room:
-	
-	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None):
+	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, public_record = PublicRecord()):
 		self.g_scale = g_scale
 		self.width = width
 		self.height = height
 		self.window = window
+
+		self.public_record = public_record
 
 		self.room_changer = roomchangedispatcher.RoomChangeDispatcher()
 		
@@ -52,6 +54,14 @@ class Room:
 		self.player.sprite.batch = self.batch
 		self.player.sprite.group = self.layers[self.player_layer]
 
+		# Do we need this? Maybe do this if it's slow to load
+		'''for obj in objects:
+			try:
+				obj.sprite.set_frame(0)
+			except:
+				print("caught OK")
+				pass'''
+
 	def get_resources(self):
 		pass
 		
@@ -83,8 +93,12 @@ class Room:
 			if self.state == STATE_FREEMOVE:
 				self.player.down_press()
 
-		elif symbol == key.Q:
+		elif symbol == key._1:
+			print("called")
 			self.room_changer.change_room("maddie")
+
+		elif symbol == key._2:
+			self.room_changer.change_room("rockstar")
 		
 		elif symbol == key.ESCAPE:
 			pyglet.app.exit()
@@ -198,8 +212,8 @@ class Room:
 		
 		
 class GameRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None):
-		super().__init__(width, height, g_scale, window)
+	def __init__(self, width, height, g_scale = 1.0, window = None, public_record = PublicRecord()):
+		super().__init__(width, height, g_scale, window, public_record)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
@@ -219,8 +233,8 @@ class GameRoom(Room):
 			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
 
 class TestRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None):
-		super().__init__(width, height, g_scale, window)
+	def __init__(self, width, height, g_scale = 1.0, window = None, public_record = PublicRecord()):
+		super().__init__(width, height, g_scale, window, public_record)
 
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
