@@ -39,7 +39,7 @@ game_batch = pyglet.graphics.Batch()
 rooms = []
 active_room = None
 player_img = pyglet.resource.image("num01.png")
-player = game_obj.Player(player_img, game_batch, x = 50, y = 50, g_scale = global_scale)
+player = game_obj.Player(player_img, None, x = 50, y = 50, g_scale = global_scale)
 
 r = room.TestRoom(abs_width, abs_height, player)
 
@@ -53,11 +53,14 @@ def on_draw():
 	#
 	# DRAW GRAPHICS HERE
 	#
-	
-	game_batch.draw()
 
 	if active_room is not None:
+		player.sprite.batch = active_room.room_batch
 		active_room.room_batch.draw()
+	else:
+		player.sprite.batch = game_batch
+
+	game_batch.draw()
 	
 	#for obj in objs:
 	#	obj.draw()
