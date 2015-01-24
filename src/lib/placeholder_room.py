@@ -10,7 +10,7 @@ from .public_record import PublicRecord
 
 class PlaceholderRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, record)
+		super().__init__(width, height, g_scale, window, record, room_name = "maddie")
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("PlaceHolderRoomBackground01.png")

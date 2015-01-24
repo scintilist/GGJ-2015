@@ -12,11 +12,13 @@ STATE_FREEMOVE = 0
 STATE_DIALOG = 1
 
 class Room:
-	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, record = PublicRecord()):
+	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, record = PublicRecord(), room_name = "default_room"):
 		self.g_scale = g_scale
 		self.width = width
 		self.height = height
 		self.window = window
+
+		self.room_name = room_name
 
 		self.record = record
 
@@ -54,6 +56,14 @@ class Room:
 		self.player.sprite.batch = self.batch
 		self.player.sprite.group = self.layers[self.player_layer]
 
+		if "player_pos" in self.record[self.room_name]:
+			pos = self.record[self.room_name]["player_pos"]
+			self.player.x = pos[0]
+			self.player.y = pos[1]
+		else:
+			self.player.x = 50
+			self.player.y = 50
+
 		# Do we need this? Maybe do this if it's slow to load
 		'''for obj in objects:
 			try:
@@ -70,9 +80,12 @@ class Room:
 		
 	def update(self, dt):
 		# Room updates here
-		
 		for obj in self.objects:
 			obj.update(dt)
+
+	def cleanup(self):
+		# Store all necessary state
+		self.record[self.room_name]["player_pos"] = (self.player.x, self.player.y)
 	
 	# EVENT HANDLERS
 	# Keyboard
@@ -212,7 +225,7 @@ class Room:
 		
 class GameRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, record)
+		super().__init__(width, height, g_scale, window, record, room_name = "rockstar")
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")

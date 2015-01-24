@@ -16,9 +16,9 @@ abs_width, abs_height = 1920, 1080
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 
 window = pyglet.window.Window(config=config, 
-	fullscreen=True, # Fullscreen
-	#width = int(abs_width * global_scale),
-	#height = int(abs_height * global_scale),
+	# fullscreen=True, # Fullscreen
+	width = int(abs_width * global_scale),
+	height = int(abs_height * global_scale),
 	resizable = False,
 	)
 	
@@ -60,6 +60,7 @@ def on_room_change(self, room_name):
 	global active_room
 
 	if room_name in rooms:
+		active_room.cleanup()
 		active_room = rooms[room_name](abs_width, abs_height, g_scale = global_scale, window = window, record = record)
 roomchangedispatcher.RoomChangeDispatcher.on_room_change = on_room_change
 
