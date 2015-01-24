@@ -4,7 +4,7 @@ from pyglet.window import key
 from pyglet.window import mouse
 
 from . import util
-from . import game_obj
+from .game_obj import *
 from . import roomchangedispatcher
 from .public_record import PublicRecord
 
@@ -17,10 +17,8 @@ class Room:
 		self.width = width
 		self.height = height
 		self.window = window
-
-		self.room_name = room_name
-
 		self.record = record
+		self.room_name = room_name
 
 		self.room_changer = roomchangedispatcher.RoomChangeDispatcher()
 		
@@ -36,22 +34,15 @@ class Room:
 			layer = pyglet.graphics.OrderedGroup(i)
 			self.layers.append(layer)
 
-		'''self.player.sprite.batch = self.batch
-		self.player.sprite.group = self.layers[self.player_layer]'''
-
-		self.bottom_left = util.Point(0, 0)
-		self.top_right = util.Point(width, height)
-
 		# Event handlers
 		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
 
-		# Set player to be rendered here
-		# Player is a game object w/ event handlers
-		player_img = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = .02)
-		self.player = game_obj.Player(player_img, group = self.layers[self.player_layer], x = 100, y = 50, room = self)
-
 		# List of game_obj; everything in the room that isn't bg
-		self.objects = [self.player]
+		self.objects = []
+		
+		# Add player here, player is a game object w/ event handlers
+		player_img = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		self.player = self.add_object(Player, player_img, layer_offset = 0, x = 600, y = 50, scale = 1)
 		
 		if "player_pos" in self.record[self.room_name]:
 			pos = self.record[self.room_name]["player_pos"]
@@ -61,20 +52,17 @@ class Room:
 			self.player.x = start_x
 			self.player.y = start_y
 
-		# Do we need this? Maybe do this if it's slow to load
-		'''for obj in objects:
-			try:
-				obj.sprite.set_frame(0)
-			except:
-				print("caught OK")
-				pass'''
-
 	def get_resources(self):
 		pass
 		
 	def build_objects(self):
 		pass
-		
+
+	def add_object(self, obj_type, img, layer_offset = 0, x = 0, y = 0, scale = 1):
+		obj = obj_type(img, group = self.layers[self.player_layer+layer_offset], x = x, y = y, scale = scale, room = self)
+		self.objects.append(obj)
+		return obj
+	
 	def update(self, dt):
 		# Room updates here
 		for obj in self.objects:
@@ -239,7 +227,7 @@ class GameRoom(Room):
 		
 	def build_objects(self):
 		# Create animated room object from animation
-		self.objects.append(game_obj.Game_Obj(self.nums_animation, group = self.layers[1], 
+		self.objects.append(Game_Obj(self.nums_animation, group = self.layers[1], 
 			x = self.width/2, y = self.height/2, scale = 2, room = self))
 
 class TestRoom(Room):
@@ -264,7 +252,7 @@ class TestRoom(Room):
 		
 	def build_objects(self):
 		# Create animated room object from animation
-		self.objects.append(game_obj.Game_Obj(self.nums_animation, group = self.layers[1], 
+		self.objects.append(Game_Obj(self.nums_animation, group = self.layers[1], 
 			x = self.width/2, y = self.height/2, scale = 2, room = self))
 
 			
