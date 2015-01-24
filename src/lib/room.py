@@ -94,7 +94,6 @@ class Room:
 				self.player.down_press()
 
 		elif symbol == key._1:
-			print("called")
 			self.room_changer.change_room("maddie")
 
 		elif symbol == key._2:
