@@ -4,12 +4,17 @@ from pyglet.gl import *
 from lib import game_obj
 from lib import util
 
+global_scale = 0.5
+(abs_width, abs_height) = (1920, 1080)
+
 # Set up graphical window
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 
 window = pyglet.window.Window(config=config, 
 	#height=600, width=800, # Windowed
-	fullscreen=True, # Fullscreen
+	# fullscreen=True, # Fullscreen
+	width = abs_width * global_scale,
+	height = abs_height * global_scale,
 	resizable=True
 	)
 
@@ -23,6 +28,23 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 # FPS counter display
 counter = pyglet.clock.ClockDisplay()
 
+# Load resources
+pyglet.resource.path = ['../art']
+pyglet.resource.reindex()
+
+# Create main grpahics batch
+game_batch = pyglet.graphics.Batch()
+
+rooms = []
+active_room = None
+player_img = pyglet.resource.image("num01.png")
+player = game_obj.Player(player_img, batch = game_batch, x = 50, y = 50, g_scale = global_scale)
+
+r = TestRoom(abs_width, abs_height, player)
+
+rooms.append(r)
+active_room = r
+
 @window.event
 def on_draw():
 	window.clear()
@@ -32,6 +54,9 @@ def on_draw():
 	#
 	
 	game_batch.draw()
+
+	if active_room is not None:
+		active_room.room_batch.draw()
 	
 	#for obj in objs:
 	#	obj.draw()
@@ -45,15 +70,15 @@ def update(dt):
 	#
 	for obj in objs:
 		obj.update(dt)
+	
 
-# Create main grpahics batch
-game_batch = pyglet.graphics.Batch()
-				
-# Load resources
-pyglet.resource.path = ['../art']
-pyglet.resource.reindex()
+if __name__ == '__main__':
+	main()
 
-frame_list = util.get_frame_list('num.png', frame_count = 9, num_digits = 2, center = True)
+
+####				
+
+'''frame_list = util.get_frame_list('num.png', frame_count = 9, num_digits = 2, center = True)
 nums_sprite = pyglet.image.Animation.from_image_sequence(frame_list, .2, loop=True)
 
 # Create list of game objects from sprite
@@ -86,7 +111,7 @@ def play(dt):
 	else:
 		pyglet.clock.unschedule(play)
 		i = 0
-		pyglet.clock.schedule_interval(pause, .05) # Pause 1 sprite per cycle
+		pyglet.clock.schedule_interval(pause, .05) # Pause 1 sprite per cycle'''
 		
 #pyglet.clock.schedule_interval(pause, .05) # Pause 1 sprite per cycle
 

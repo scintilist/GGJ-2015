@@ -30,7 +30,7 @@ class Game_Obj():
 def Player(Game_Obj):
 	''' Player character'''
 	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		super().__init__(image, batch, x, y)
+		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
 		
 	def update(self, dt):
 		pass
@@ -45,7 +45,7 @@ def Player(Game_Obj):
 class Rockstar(Game_Obj):
 	''' Performs a sweet animated transform on the sprite contained within'''
 	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		super().__init__(image, batch, x, y)
+		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
 
 		self.scale_v = .1
 		self.rot_v = 4
@@ -66,7 +66,7 @@ class Rockstar(Game_Obj):
 class Spinning_Nums(Rockstar):
 	''' Performs a sweet animated transform on the sprite contained within'''
 	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		super().__init__(image, batch, x, y)
+		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
 		
 		self.scale_v = .03
 		self.rot_v = 2
