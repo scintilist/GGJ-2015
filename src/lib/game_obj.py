@@ -4,22 +4,21 @@ from . import util
 
 class Game_Obj():
 	''' Some game object containing a sprite, draw method, and things to do on update'''
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, 
+	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, 
 			rotation = 0, visible = True, opacity = 255, record = PublicRecord(), room = None,
 			x_range = (float('-inf'), float('+inf')), y_range = (float('-inf'), float('+inf'))):
-			
-		self.sprite = anim_sprite.Anim_Sprite(image, x*g_scale, y*g_scale, batch = batch, group = group)
+		self.sprite = anim_sprite.Anim_Sprite(image, x*room.g_scale, y*room.g_scale, batch = room.batch, group = group)
+		
+		self.room = room
 		
 		# Sprite stuff
 		self.x = x # pixel values based on 1920x1080
 		self.y = y 
 		self.scale = scale
-		self.g_scale = g_scale
+		self.g_scale = room.g_scale
 		self.rotation = rotation # degrees clockwise
 		self.opacity = opacity # 0 -255
 		self.visible = visible # True or False
-
-		self.room = room
 
 		self.record = record
 		
@@ -64,9 +63,9 @@ WALK_DOWN = 6
 
 class Player(Game_Obj):
 	''' Player character'''
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, 
-			scale = 1.0, rotation = 0, visible = True, opacity = 255, record = PublicRecord(), room = None):
-		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity, record, room = room)
+	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, rotation = 0, 
+			visible = True, opacity = 255, record = PublicRecord(), room = None):
+		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
 		
 		self.lr_state = STILL
 		self.ud_state = STILL
@@ -181,8 +180,8 @@ class Player(Game_Obj):
 	
 class Rockstar(Game_Obj):
 	''' Performs a sweet animated transform on the sprite contained within'''
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255, room = None):
-		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity, room = room)
+	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, rotation = 0, visible = True, opacity = 255, room = None):
+		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
 
 		self.scale_v = .1
 		self.rot_v = 4
@@ -204,8 +203,8 @@ class Rockstar(Game_Obj):
 
 class Spinning_Nums(Rockstar):
 	''' Performs a sweet animated transform on the sprite contained within'''
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255, room = None):
-		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity, room = room)
+	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, rotation = 0, visible = True, opacity = 255, room = None):
+		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
 		
 		self.scale_v = .03
 		self.rot_v = 2

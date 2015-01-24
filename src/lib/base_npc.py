@@ -1,8 +1,11 @@
 from .game_obj import Game_Obj
+from . import util
+from .public_record import PublicRecord
 
 class NPC(Game_Obj):
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255, room = None):
-		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity, room = room)
+	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, rotation = 0, 
+			visible = True, opacity = 255, record = PublicRecord(), room = None):
+		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
 	
 	def mouse_click(self, x, y):
 		print("npc mouse click was called")

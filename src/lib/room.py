@@ -25,10 +25,6 @@ class Room:
 		self.room_changer = roomchangedispatcher.RoomChangeDispatcher()
 		
 		self.state = STATE_FREEMOVE
-		
-		# Player is a game object w/ event handlers
-		player_img = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = .02)
-		self.player = game_obj.Player(player_img, None, x = 100, y = 50, g_scale = g_scale, room = self)
 
 		# Batches ain't shit but groups and tricks
 		self.batch = pyglet.graphics.Batch()
@@ -46,16 +42,17 @@ class Room:
 		self.bottom_left = util.Point(0, 0)
 		self.top_right = util.Point(width, height)
 
-		# List of game_obj; everything in the room that isn't bg
-		self.objects = [self.player]
-		
 		# Event handlers
 		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
 
 		# Set player to be rendered here
-		self.player.sprite.batch = self.batch
-		self.player.sprite.group = self.layers[self.player_layer]
+		# Player is a game object w/ event handlers
+		player_img = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = .02)
+		self.player = game_obj.Player(player_img, group = self.layers[self.player_layer], x = 100, y = 50, room = self)
 
+		# List of game_obj; everything in the room that isn't bg
+		self.objects = [self.player]
+		
 		if "player_pos" in self.record[self.room_name]:
 			pos = self.record[self.room_name]["player_pos"]
 			self.player.x = pos[0]
@@ -242,8 +239,8 @@ class GameRoom(Room):
 		
 	def build_objects(self):
 		# Create animated room object from animation
-		self.objects.append(game_obj.Game_Obj(self.nums_animation, batch = self.batch, group = self.layers[1], 
-			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
+		self.objects.append(game_obj.Game_Obj(self.nums_animation, group = self.layers[1], 
+			x = self.width/2, y = self.height/2, scale = 2, room = self))
 
 class TestRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
@@ -267,8 +264,8 @@ class TestRoom(Room):
 		
 	def build_objects(self):
 		# Create animated room object from animation
-		self.objects.append(game_obj.Game_Obj(self.nums_animation, batch = self.batch, group = self.layers[1], 
-			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
+		self.objects.append(game_obj.Game_Obj(self.nums_animation, group = self.layers[1], 
+			x = self.width/2, y = self.height/2, scale = 2, room = self))
 
 			
 	

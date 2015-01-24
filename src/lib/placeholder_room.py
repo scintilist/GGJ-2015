@@ -32,11 +32,13 @@ class PlaceholderRoom(Room):
 
 		self.rockstar_npc_img = pyglet.resource.image("rockstarguy.jpg")
 
+	def make_object(self):
+		pass
+		
 	def build_objects(self):
 		# Create animated room object from animation
-		obj = game_obj.Game_Obj(self.place_animation, batch = self.batch, group = self.layers[1], 
-			x = 100, y = 200, g_scale = self.g_scale, scale = 2, room = self)
+		obj = game_obj.Game_Obj(self.place_animation, group = self.layers[1], x = 100, y = 200, scale = 2, room = self)
 		self.objects.append(obj)
 
-		npc = NPC(self.rockstar_npc_img, batch = self.batch, group = self.layers[self.player_layer-1], x = 600, y = 50, g_scale = self.g_scale, scale = 1, room = self)
+		npc = NPC(self.rockstar_npc_img, group = self.layers[self.player_layer-1], x = 600, y = 50, scale = 1, room = self)
 		self.objects.append(npc)
