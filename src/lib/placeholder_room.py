@@ -6,10 +6,11 @@ from pyglet.window import mouse
 from . import util
 from . import game_obj
 from .room import *
+from .public_record import PublicRecord
 
 class PlaceholderRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None):
-		super().__init__(width, height, g_scale, window)
+	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
+		super().__init__(width, height, g_scale, window, record)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("PlaceHolderRoomBackground01.png")

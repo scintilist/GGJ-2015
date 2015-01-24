@@ -12,13 +12,13 @@ STATE_FREEMOVE = 0
 STATE_DIALOG = 1
 
 class Room:
-	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, public_record = PublicRecord()):
+	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, record = PublicRecord()):
 		self.g_scale = g_scale
 		self.width = width
 		self.height = height
 		self.window = window
 
-		self.public_record = public_record
+		self.record = record
 
 		self.room_changer = roomchangedispatcher.RoomChangeDispatcher()
 		
@@ -211,8 +211,8 @@ class Room:
 		
 		
 class GameRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None, public_record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, public_record)
+	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
+		super().__init__(width, height, g_scale, window, record)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
@@ -232,8 +232,8 @@ class GameRoom(Room):
 			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
 
 class TestRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None, public_record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, public_record)
+	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
+		super().__init__(width, height, g_scale, window, record)
 
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")

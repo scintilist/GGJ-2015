@@ -7,6 +7,7 @@ from lib import util
 from lib import room
 from lib import placeholder_room
 from lib import roomchangedispatcher
+from lib import public_record
 
 global_scale = .5
 abs_width, abs_height = 1920, 1080
@@ -44,12 +45,14 @@ pyglet.resource.path = [
 
 pyglet.resource.reindex()
 
+record = public_record.PublicRecord()
+
 rooms = {
 	"rockstar": room.GameRoom,
 	"maddie":   placeholder_room.PlaceholderRoom,
 }
 
-active_room = rooms["rockstar"](abs_width, abs_height, g_scale = global_scale, window = window)
+active_room = rooms["rockstar"](abs_width, abs_height, g_scale = global_scale, window = window, record = record)
 
 # Set up room switch handle
 def on_room_change(self, room_name):
@@ -57,7 +60,7 @@ def on_room_change(self, room_name):
 	global active_room
 
 	if room_name in rooms:
-		active_room = rooms[room_name](abs_width, abs_height, g_scale = global_scale, window = window)
+		active_room = rooms[room_name](abs_width, abs_height, g_scale = global_scale, window = window, record = record)
 roomchangedispatcher.RoomChangeDispatcher.on_room_change = on_room_change
 
 @window.event
