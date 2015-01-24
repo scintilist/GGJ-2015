@@ -5,6 +5,7 @@ class Game_Obj():
 	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
 		self.sprite = anim_sprite.Anim_Sprite(image, x*g_scale, y*g_scale, batch = batch, group = group)
 		
+		# Sprite stuff
 		self.x = x # pixel values based on 1920x1080
 		self.y = y 
 		self.scale = scale
@@ -15,9 +16,20 @@ class Game_Obj():
 		
 		self.update_sprite() # save game object values to the sprite
 		
+		# Non-sprite stuff
+		self.theta = 0
+		self.vx = 0
+		self.vy = 0
+		
 	def update(self, dt):
-		# DO STUFF
+		self.update_position(dt)
 		self.update_sprite()
+		
+	def update_position(self, dt):
+		# update object posistion
+		self.x += self.vx
+		self.y += self.vy
+		self.rotation += self.theta
 			
 	def update_sprite(self):
 		self.sprite.x = self.x * self.g_scale
@@ -34,13 +46,14 @@ class Player(Game_Obj):
 		pass
 		
 	def update(self, dt):
-		pass
+		super().update_position(dt)
 		
-		super().update(dt)
+		# DO STUFF HERE
 		
+		super().update_sprite()
 		
 # 
-#	TEST OBJECTS DO NOT MODIFY
+#	TEST OBJECT PLEASE IGNORE
 #		
 	
 class Rockstar(Game_Obj):
@@ -55,6 +68,8 @@ class Rockstar(Game_Obj):
 		self.scale_min = .3
 		
 	def update(self, dt):
+		super().update_position(dt)
+		
 		self.scale += self.scale_v
 		self.rotation += self.rot_v
 
@@ -62,7 +77,7 @@ class Rockstar(Game_Obj):
 			self.scale_v *= -1
 			self.rot_v *= -1
 			
-		super().update(dt)
+		super().update_sprite()
 			
 class Spinning_Nums(Rockstar):
 	''' Performs a sweet animated transform on the sprite contained within'''

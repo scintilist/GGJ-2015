@@ -33,15 +33,12 @@ counter = pyglet.clock.ClockDisplay()
 pyglet.resource.path = ['../art']
 pyglet.resource.reindex()
 
-# Create main grpahics batch
-game_batch = pyglet.graphics.Batch()
-
 rooms = []
 active_room = None
 player_img = pyglet.resource.image("num01.png")
 player = game_obj.Player(player_img, None, x = 50, y = 50, g_scale = global_scale)
 
-r = room.TestRoom(abs_width, abs_height, player)
+r = room.TestRoom(abs_width, abs_height, player, g_scale = global_scale)
 
 rooms.append(r)
 active_room = r
@@ -50,72 +47,17 @@ active_room = r
 def on_draw():
 	window.clear()
 	
-	#
-	# DRAW GRAPHICS HERE
-	#
-
 	if active_room is not None:
-		player.sprite.batch = active_room.room_batch
-		active_room.room_batch.draw()
-	else:
-		player.sprite.batch = game_batch
-
-	game_batch.draw()
-	
-	#for obj in objs:
-	#	obj.draw()
-	
+		active_room.batch.draw()
 	
 	counter.draw()
 	
 def update(dt):
-	#
-	# UPDATE HERE
-	#
 	
 	if active_room is not None:
-		active_room.update()
-
-
-
-####				
-
-'''frame_list = util.get_frame_list('num.png', frame_count = 9, num_digits = 2, center = True)
-nums_sprite = pyglet.image.Animation.from_image_sequence(frame_list, .2, loop=True)
-
-# Create list of game objects from sprite
-objs = []
-for x in range(100, window.width, 150):
-	for y in range(100, window.height, 150):
-		objs.append(game_obj.Spinning_Nums(nums_sprite, batch = game_batch, x = x, y = y))
+		active_room.update(dt)
 
 pyglet.clock.schedule_interval(update, 1/120) # Game time step
-
-i = 0
-
-def pause(dt):
-	global i
-	if i < len(objs):
-		objs[i].sprite.pause()
-		objs[i].sprite.visible = False
-		i += 1
-	else:
-		pyglet.clock.unschedule(pause)
-		i = 0
-		pyglet.clock.schedule_interval(play, .05) # Pause 1 sprite per cycle
-		
-def play(dt):
-	global i
-	if i < len(objs):
-		objs[i].sprite.play()
-		objs[i].sprite.visible = True
-		i += 1
-	else:
-		pyglet.clock.unschedule(play)
-		i = 0
-		pyglet.clock.schedule_interval(pause, .05) # Pause 1 sprite per cycle'''
-		
-#pyglet.clock.schedule_interval(pause, .05) # Pause 1 sprite per cycle
 
 #window.push_handlers()
 pyglet.app.run() # Run pyglet
