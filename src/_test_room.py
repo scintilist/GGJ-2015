@@ -6,17 +6,17 @@ from lib import util
 from lib import room
 
 global_scale = 0.5
+
 (abs_width, abs_height) = (1920, 1080)
 
 # Set up graphical window
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 
 window = pyglet.window.Window(config=config, 
-	#height=600, width=800, # Windowed
 	# fullscreen=True, # Fullscreen
 	width = int(abs_width * global_scale),
 	height = int(abs_height * global_scale),
-	resizable=True
+	resizable=False,
 	)
 
 # Background color
@@ -39,7 +39,7 @@ game_batch = pyglet.graphics.Batch()
 rooms = []
 active_room = None
 player_img = pyglet.resource.image("num01.png")
-player = game_obj.Player(player_img, batch = game_batch, x = 50, y = 50, g_scale = global_scale)
+player = game_obj.Player(player_img, game_batch, x = 50, y = 50, g_scale = global_scale)
 
 r = room.TestRoom(abs_width, abs_height, player)
 
@@ -69,8 +69,10 @@ def update(dt):
 	#
 	# UPDATE HERE
 	#
-	for obj in objs:
-		obj.update(dt)
+	
+	if active_room is not None:
+		active_room.update()
+
 
 
 ####				
