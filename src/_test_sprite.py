@@ -1,7 +1,7 @@
 import pyglet
 from pyglet.gl import *
 
-import game_obj
+from lib import game_obj
 
 # Set up graphical window
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
@@ -40,7 +40,7 @@ def update(dt):
 	rockstar_guy_obj.update(dt)
 
 # Load resource
-pyglet.resource.path = ['./silliness']
+pyglet.resource.path = ['../silliness']
 pyglet.resource.reindex()
 
 rockstar_guy_img = pyglet.resource.image("rockstarguy.jpg")
@@ -53,7 +53,7 @@ def center_image(image):
 center_image(rockstar_guy_img)
 
 # Create game object from image
-rockstar_guy_obj = game_obj.Rockstar(rockstar_guy_img, window.width/2, window.height/2)
+rockstar_guy_obj = game_obj.Rockstar(rockstar_guy_img, x = window.width/2, y = window.height/2)
 
 pyglet.clock.schedule_interval(update, 1/120) # Game time step
 

@@ -1,8 +1,8 @@
 import pyglet
 from pyglet.gl import *
 
-import game_obj
-from utilities import util
+from lib import game_obj
+from lib import util
 
 # Set up graphical window
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
@@ -50,7 +50,7 @@ def update(dt):
 game_batch = pyglet.graphics.Batch()
 				
 # Load resources
-pyglet.resource.path = ['./art']
+pyglet.resource.path = ['../art']
 pyglet.resource.reindex()
 
 frame_list = util.get_frame_list('num.png', frame_count = 9, num_digits = 2, center = True)

@@ -1,4 +1,4 @@
-from utilities import anim_sprite
+from . import anim_sprite
 
 class Game_Obj():
 	''' Some game object containing a sprite, draw method, and things to do on update'''
@@ -23,14 +23,7 @@ class Game_Obj():
 		self.sprite.opacity = 255
 		
 	def update(self, dt):
-	
-	
-	
-		update_sprite_coords()
-			
-	def update_sprite_coords(self):
-		self.sprite.x = self.room_x
-		self.sprite.y = self.room_y
+			pass
 		
 	def draw(self):
 		# Only call this method if the sprite is not part of a batch already
