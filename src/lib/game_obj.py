@@ -2,8 +2,8 @@ from . import anim_sprite
 
 class Game_Obj():
 	''' Some game object containing a sprite, draw method, and things to do on update'''
-	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		self.sprite = anim_sprite.Anim_Sprite(image, x*g_scale, y*g_scale, batch = batch)
+	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
+		self.sprite = anim_sprite.Anim_Sprite(image, x*g_scale, y*g_scale, batch = batch, group = group)
 		
 		self.x = x # pixel values based on 1920x1080
 		self.y = y 
@@ -29,8 +29,8 @@ class Game_Obj():
 		
 class Player(Game_Obj):
 	''' Player character'''
-	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
+	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
+		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity)
 		pass
 		
 	def update(self, dt):
@@ -45,8 +45,8 @@ class Player(Game_Obj):
 	
 class Rockstar(Game_Obj):
 	''' Performs a sweet animated transform on the sprite contained within'''
-	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
+	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
+		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity)
 
 		self.scale_v = .1
 		self.rot_v = 4
@@ -66,8 +66,8 @@ class Rockstar(Game_Obj):
 			
 class Spinning_Nums(Rockstar):
 	''' Performs a sweet animated transform on the sprite contained within'''
-	def __init__(self, image, batch = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
-		super().__init__(image, batch, x, y, g_scale, scale, rotation, visible, opacity)
+	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
+		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity)
 		
 		self.scale_v = .03
 		self.rot_v = 2
