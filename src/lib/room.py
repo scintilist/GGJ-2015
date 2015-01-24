@@ -1,6 +1,7 @@
 import pyglet
 from pyglet.gl import *
 from pyglet.window import key
+from pyglet.window import mouse
 
 from . import util
 from . import game_obj
@@ -37,8 +38,11 @@ class Room:
 		self.bottom_left = util.Point(0, 0)
 		self.top_right = util.Point(width, height)
 
-		# List of game_obj; everything in the room that isn't player or bg
+		# List of game_obj; everything in the room that isn't bg
 		self.objects = [player]
+		
+		# Event handlers
+		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
 		
 	def get_resources(self):
 		pass
@@ -51,13 +55,99 @@ class Room:
 		
 		for obj in self.objects:
 			obj.update(dt)
+	
+	# EVENT HANDLERS
+	# Keyboard
+	def on_key_press(self, symbol, modifier):
+		if symbol == key.A:
+			if self.state == STATE_FREEMOVE:
+				self.player.left_press()
+		
+		elif symbol == key.D:
+			if self.state == STATE_FREEMOVE:
+				self.player.right_press()
+				
+		elif symbol == key.W:
+			if self.state == STATE_FREEMOVE:
+				self.player.up_press()
+				
+		elif symbol == key.S:
+			if self.state == STATE_FREEMOVE:
+				self.player.down_press()
+				
+		return True # The buck stops here
+		
+	def on_key_release(self, symbol, modifier):
+		if symbol == key.A:
+			if self.state == STATE_FREEMOVE:
+				self.player.left_release()
+		
+		elif symbol == key.D:
+			if self.state == STATE_FREEMOVE:
+				self.player.right_release()
+				
+		elif symbol == key.W:
+			if self.state == STATE_FREEMOVE:
+				self.player.up_release()
+				
+		elif symbol == key.S:
+			if self.state == STATE_FREEMOVE:
+				self.player.down_release()
+				
+		return True # The buck stops here
+		
+	# Mouse
+	def on_mouse_press(self, x, y, button, modifiers):
+		if button == LEFT:
+			pass
+			# Get a list of objects mouse is over
 			
-			
+			# Sort by layer
+			# Try to call in layer order, then return True
+		
+		return True # The buck stops here
+
+		
+		
+		
+		
+		
+		
+		
+		
+#	
+# TEST ROOMS PLEASE IGNORE		
+#		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
 class GameRoom(Room):
 	def __init__(self, width, height, player, g_scale = 1.0, window = None):
 		super().__init__(width, height, player, g_scale, window)
-		
-		self.window.push_handlers(self.on_key_press, self.on_key_release)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
@@ -75,46 +165,6 @@ class GameRoom(Room):
 		# Create animated room object from animation
 		self.objects.append(game_obj.Game_Obj(self.nums_animation, batch = self.batch, group = self.layers[1], 
 			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
-			
-	# EVENT HANDLERS		
-	def on_key_press(self, symbol, modifier):
-		if symbol == key.LEFT:
-			if self.state == STATE_FREEMOVE:
-				self.player.left_press()
-		
-		elif symbol == key.RIGHT:
-			if self.state == STATE_FREEMOVE:
-				self.player.right_press()
-				
-		elif symbol == key.UP:
-			if self.state == STATE_FREEMOVE:
-				self.player.up_press()
-				
-		elif symbol == key.DOWN:
-			if self.state == STATE_FREEMOVE:
-				self.player.down_press()
-				
-		return True # The buck stops here
-		
-	def on_key_release(self, symbol, modifier):
-		if symbol == key.LEFT:
-			if self.state == STATE_FREEMOVE:
-				self.player.left_release()
-		
-		elif symbol == key.RIGHT:
-			if self.state == STATE_FREEMOVE:
-				self.player.right_release()
-				
-		elif symbol == key.UP:
-			if self.state == STATE_FREEMOVE:
-				self.player.up_release()
-				
-		elif symbol == key.DOWN:
-			if self.state == STATE_FREEMOVE:
-				self.player.down_release()
-				
-		return True # The buck stops here
-	
 
 class TestRoom(Room):
 	def __init__(self, width, height, player, g_scale = 1.0, window = None):
