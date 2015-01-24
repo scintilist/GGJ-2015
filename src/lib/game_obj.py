@@ -38,22 +38,106 @@ class Game_Obj():
 		self.sprite.rotation = self.rotation
 		self.sprite.visible = self.visible
 		self.sprite.opacity = self.opacity
-		
+
+STILL = 1
+BOTH_DOWN = 2
+WALK_LEFT = 3
+WALK_RIGHT = 4
+WALK_UP = 5
+WALK_DOWN = 6
+
 class Player(Game_Obj):
 	''' Player character'''
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255):
+	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, 
+			scale = 1.0, rotation = 0, visible = True, opacity = 255):
 		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity)
-		pass
+		
+		self.lr_state = STILL
+		self.ud_state = STILL
 		
 	def update(self, dt):
 		super().update_position(dt)
 		
 		# DO STUFF HERE
 		
-		super().update_sprite()
+		self.update_sprite()
+		
+	def update_sprite(self):
+		# Enable if you want the player to shrink as they walk up the screen
+		z_scale = 1 #- .5*(self.y / 1080)
+		
+		self.sprite.x = self.x * self.g_scale
+		self.sprite.y = self.y * self.g_scale
+		self.sprite.scale = self.scale * self.g_scale * z_scale
+		self.sprite.rotation = self.rotation
+		self.sprite.visible = self.visible
+		self.sprite.opacity = self.opacity
 	
+	# Left and right movement
+	def left_press(self):
+		if self.lr_state == STILL:
+			self.lr_state = WALK_LEFT
+			self.vx = -5
+		elif self.lr_state == WALK_RIGHT:
+			self.lr_state = BOTH_DOWN
+			self.vx = 0
 
+	def right_press(self):
+		if self.lr_state == STILL:
+			self.lr_state = WALK_RIGHT
+			self.vx = 5
+		elif self.lr_state == WALK_LEFT:
+			self.lr_state = BOTH_DOWN
+			self.vx = 0
 
+	def left_release(self):
+		if self.lr_state == WALK_LEFT:
+			self.lr_state = STILL
+			self.vx = 0
+		elif self.lr_state == BOTH_DOWN:
+			self.lr_state = WALK_RIGHT
+			self.vx = 5
+
+	def right_release(self):
+		if self.lr_state == WALK_RIGHT:
+			self.lr_state = STILL
+			self.vx = 0
+		elif self.lr_state == BOTH_DOWN:
+			self.lr_state = WALK_LEFT
+			self.vx = -5
+	
+	# Up and down movement
+	def down_press(self):
+		if self.ud_state == STILL:
+			self.ud_state = WALK_DOWN
+			self.vy = -5
+		elif self.ud_state == WALK_UP:
+			self.ud_state = BOTH_DOWN
+			self.vy = 0
+
+	def up_press(self):
+		if self.ud_state == STILL:
+			self.ud_state = WALK_UP
+			self.vy = 5
+		elif self.ud_state == WALK_DOWN:
+			self.ud_state = BOTH_DOWN
+			self.vy = 0
+
+	def down_release(self):
+		if self.ud_state == WALK_DOWN:
+			self.ud_state = STILL
+			self.vy = 0
+		elif self.ud_state == BOTH_DOWN:
+			self.ud_state = WALK_UP
+			self.vy = 5
+
+	def up_release(self):
+		if self.ud_state == WALK_UP:
+			self.ud_state = STILL
+			self.vy = 0
+		elif self.ud_state == BOTH_DOWN:
+			self.ud_state = WALK_DOWN
+			self.vy = -5
 
 
 

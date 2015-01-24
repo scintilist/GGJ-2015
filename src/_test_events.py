@@ -5,7 +5,7 @@ from lib import game_obj
 from lib import util
 from lib import room
 
-global_scale = 0.2
+global_scale = .5
 
 (abs_width, abs_height) = (1920, 1080)
 
