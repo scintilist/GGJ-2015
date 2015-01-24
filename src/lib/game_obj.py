@@ -90,19 +90,11 @@ class Player(Game_Obj):
 		
 		# DO STUFF HERE
 		
-		self.update_sprite()
-		
-	def update_sprite(self):
 		# Enable if you want the player to shrink as they walk up the screen
-		z_scale = 1   - self.y / self.room.height # Assume perspective point is in the center of the screen
-		# CUT HERE  ^
+		self.scale = 1 - self.y / self.room.height # Assume perspective point is in the center of the screen
+		# CUT HERE    ^
 		
-		self.sprite.x = self.x * self.g_scale
-		self.sprite.y = self.y * self.g_scale
-		self.sprite.scale = self.scale * self.g_scale * z_scale
-		self.sprite.rotation = self.rotation
-		self.sprite.visible = self.visible
-		self.sprite.opacity = self.opacity
+		self.update_sprite()
 		
 	def mouse_click(self, x, y):
 		self.visible = not self.visible

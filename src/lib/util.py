@@ -8,8 +8,12 @@ import pyglet
 def get_pixel_alpha(img, x, y):
 	rawimage = img.get_image_data()
 	format = 'RGBA'
-	pitch = rawimage.width * len(format)
+	pitch = rawimage.width * len(format) # string length per image row
 	pixels = rawimage.get_data(format, pitch)
+	rows = len(pixels) // pitch # number of image columns
+	columns = pitch // len(format)
+	y = constrain(y, 0, rows-1)
+	x = constrain(x, 0, columns-1)
 	return pixels[y * pitch + x * len(format) + 3]
 					
 

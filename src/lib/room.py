@@ -152,23 +152,23 @@ class Room:
 				try: # Try image directly
 					img = obj.sprite.image
 					
-					left = obj.x - img.anchor_x
-					bottom = obj.y - img.anchor_y
+					left = obj.x - img.anchor_x * obj.scale
+					bottom = obj.y - img.anchor_y * obj.scale
 					
-					right = obj.x - img.anchor_x + img.width
-					top = obj.y - img.anchor_y + img.height
+					right = left + img.width * obj.scale
+					top = bottom + img.height * obj.scale
 				except: # Assume animation
 					img = obj.sprite._animation.frames[obj.sprite._frame_index].image
 					
-					left = obj.x - img.anchor_x
-					bottom = obj.y - img.anchor_y
+					left = obj.x - img.anchor_x * obj.scale
+					bottom = obj.y - img.anchor_y * obj.scale
 					
-					right = obj.x - img.anchor_x + img.width
-					top = obj.y - img.anchor_y + img.height
+					right = left + img.width * obj.scale
+					top = bottom + img.height * obj.scale
 				
 				if not (m_x < left or m_x > right or m_y < bottom or m_y > top):
-					x = m_x - left
-					y = m_y - bottom
+					x = (m_x - left) / obj.scale
+					y = (m_y - bottom) / obj.scale
 					alpha_val = util.get_pixel_alpha(img, int(x), int(y))
 					if alpha_val > 0:
 						mouse_over_objs.append(obj)
