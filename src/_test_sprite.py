@@ -29,7 +29,7 @@ def on_draw():
 	#
 	# DRAW GRAPHICS HERE
 	#
-	rockstar_guy_obj.draw()
+	game_batch.draw()
 	
 	counter.draw()
 	
@@ -52,8 +52,10 @@ def center_image(image):
 
 center_image(rockstar_guy_img)
 
+game_batch = pyglet.graphics.Batch()
+
 # Create game object from image
-rockstar_guy_obj = game_obj.Rockstar(rockstar_guy_img, x = window.width/2, y = window.height/2)
+rockstar_guy_obj = game_obj.Rockstar(rockstar_guy_img, batch = game_batch, x = window.width/2, y = window.height/2)
 
 pyglet.clock.schedule_interval(update, 1/120) # Game time step
 
