@@ -67,8 +67,6 @@ class Player(Game_Obj):
 	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, 
 			scale = 1.0, rotation = 0, visible = True, opacity = 255, record = PublicRecord(), room = None):
 		super().__init__(image, batch, group, x, y, g_scale, scale, rotation, visible, opacity, record, room = room)
-
-		print(self.room)
 		
 		self.lr_state = STILL
 		self.ud_state = STILL
