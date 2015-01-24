@@ -9,18 +9,20 @@ from lib import placeholder_room
 from lib import roomchangedispatcher
 
 global_scale = .5
-
-(abs_width, abs_height) = (1920, 1080)
+abs_width, abs_height = 1920, 1080
 
 # Set up graphical window
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 
 window = pyglet.window.Window(config=config, 
-	# fullscreen=True, # Fullscreen
+	#fullscreen=True, # Fullscreen
 	width = int(abs_width * global_scale),
 	height = int(abs_height * global_scale),
 	resizable = False,
 	)
+	
+# Auto scale graphics to screen size
+global_scale = min(window.width/abs_width, window.height/abs_height)
 
 # Background color
 glClearColor(.8,.8,.8,1)

@@ -84,7 +84,10 @@ class Room:
 
 		elif symbol == key.Q:
 			self.room_changer.change_room("maddie")
-				
+		
+		elif symbol == key.ESCAPE:
+			pyglet.app.exit()
+			
 		return True # The buck stops here
 		
 	def on_key_release(self, symbol, modifier):
