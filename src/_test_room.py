@@ -3,6 +3,7 @@ from pyglet.gl import *
 
 from lib import game_obj
 from lib import util
+from lib import room
 
 global_scale = 0.5
 (abs_width, abs_height) = (1920, 1080)
@@ -40,7 +41,7 @@ active_room = None
 player_img = pyglet.resource.image("num01.png")
 player = game_obj.Player(player_img, batch = game_batch, x = 50, y = 50, g_scale = global_scale)
 
-r = TestRoom(abs_width, abs_height, player)
+r = room.TestRoom(abs_width, abs_height, player)
 
 rooms.append(r)
 active_room = r
