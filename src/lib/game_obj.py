@@ -54,6 +54,8 @@ class Player(Game_Obj):
 		
 		self.lr_state = STILL
 		self.ud_state = STILL
+
+		self.speed = 2
 		
 	def update(self, dt):
 		super().update_position(dt)
@@ -80,7 +82,7 @@ class Player(Game_Obj):
 	def left_press(self):
 		if self.lr_state == STILL:
 			self.lr_state = WALK_LEFT
-			self.vx = -5
+			self.vx = -self.speed
 		elif self.lr_state == WALK_RIGHT:
 			self.lr_state = BOTH_DOWN
 			self.vx = 0
@@ -88,7 +90,7 @@ class Player(Game_Obj):
 	def right_press(self):
 		if self.lr_state == STILL:
 			self.lr_state = WALK_RIGHT
-			self.vx = 5
+			self.vx = self.speed
 		elif self.lr_state == WALK_LEFT:
 			self.lr_state = BOTH_DOWN
 			self.vx = 0
@@ -99,7 +101,7 @@ class Player(Game_Obj):
 			self.vx = 0
 		elif self.lr_state == BOTH_DOWN:
 			self.lr_state = WALK_RIGHT
-			self.vx = 5
+			self.vx = self.speed
 
 	def right_release(self):
 		if self.lr_state == WALK_RIGHT:
@@ -107,13 +109,13 @@ class Player(Game_Obj):
 			self.vx = 0
 		elif self.lr_state == BOTH_DOWN:
 			self.lr_state = WALK_LEFT
-			self.vx = -5
+			self.vx = -self.speed
 	
 	# Up and down movement
 	def down_press(self):
 		if self.ud_state == STILL:
 			self.ud_state = WALK_DOWN
-			self.vy = -5
+			self.vy = -self.speed
 		elif self.ud_state == WALK_UP:
 			self.ud_state = BOTH_DOWN
 			self.vy = 0
@@ -121,7 +123,7 @@ class Player(Game_Obj):
 	def up_press(self):
 		if self.ud_state == STILL:
 			self.ud_state = WALK_UP
-			self.vy = 5
+			self.vy = self.speed
 		elif self.ud_state == WALK_DOWN:
 			self.ud_state = BOTH_DOWN
 			self.vy = 0
@@ -132,7 +134,7 @@ class Player(Game_Obj):
 			self.vy = 0
 		elif self.ud_state == BOTH_DOWN:
 			self.ud_state = WALK_UP
-			self.vy = 5
+			self.vy = self.speed
 
 	def up_release(self):
 		if self.ud_state == WALK_UP:
@@ -140,7 +142,7 @@ class Player(Game_Obj):
 			self.vy = 0
 		elif self.ud_state == BOTH_DOWN:
 			self.ud_state = WALK_DOWN
-			self.vy = -5
+			self.vy = -self.speed
 
 
 
