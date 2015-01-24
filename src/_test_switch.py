@@ -46,30 +46,31 @@ player = game_obj.Player(player_img, None, x = 50, y = 50, g_scale = global_scal
 active_room_idx = 0
 active_room = None
 
-r = room.GameRoom(abs_width, abs_height, player, g_scale = global_scale, window = window)
-r2 = placeholder_room.PlaceholderRoom(abs_width, abs_height, player, g_scale = global_scale, window = window)
+# r = room.GameRoom(abs_width, abs_height, player, g_scale = global_scale, window = window)
+# r2 = placeholder_room.PlaceholderRoom(abs_width, abs_height, player, g_scale = global_scale, window = window)
 
-active_room = r
-active_room.activate_room()
+# active_room.activate_room()
 
 # rooms = [r, r2]
 rooms = {
-	"rockstar": r,
-	"maddie":   r2,
+	"rockstar": room.GameRoom,
+	"maddie":   placeholder_room.PlaceholderRoom,
 }
 
+active_room = rooms["rockstar"](abs_width, abs_height, player, g_scale = global_scale, window = window)
+
 # Set up room switch handle
-def on_room_change(room_name):
+def on_room_change(self, room_name):
 	print("hey")
 	global rooms
 	global active_room
 
 	if room_name in rooms:
-		active_room = rooms[room_name]
-		active_room.activate_room()
+		active_room = rooms[room_name](abs_width, abs_height, player, g_scale = global_scale, window = window)
 		player.x = 50
 		player.y = 50
-window.push_handlers(on_room_change)
+# window.push_handlers(on_room_change)
+roomchangedispatcher.RoomChangeDispatcher.on_room_change = on_room_change
 
 
 # Must do this after room creation to hit top of stack

@@ -21,9 +21,15 @@ class PlaceholderRoom(Room):
 		
 	def get_resources(self):
 		# Create animation from file
-		self.nums_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
+		# self.place_animation = util.make_animation('num.png', frame_count = 6, num_digits = 2, center = True, loop = True, duration = .4)
+		self.place_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
 		
 	def build_objects(self):
 		# Create animated room object from animation
-		self.objects.append(game_obj.Game_Obj(self.nums_animation, batch = self.batch, group = self.layers[1], 
-			x = 100, y = 200, g_scale = self.g_scale, scale = 2))
+		obj = game_obj.Game_Obj(self.place_animation, batch = self.batch, group = self.layers[1], 
+			x = 100, y = 200, g_scale = self.g_scale, scale = 2)
+
+		self.objects.append(obj)
+		
+
+		

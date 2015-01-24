@@ -7,4 +7,4 @@ class RoomChangeDispatcher(pyglet.event.EventDispatcher):
 	# def on_room_change(self, room_name):
 	# 	print("default handler", room_name)
 
-# RoomChangeDispatcher.register_event_type("on_room_change")
+RoomChangeDispatcher.register_event_type("on_room_change")

@@ -47,10 +47,10 @@ class Room:
 		# Event handlers
 		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
 
-	def activate_room(self):
+		# Set player to be rendered here
 		self.player.sprite.batch = self.batch
 		self.player.sprite.group = self.layers[self.player_layer]
-		
+
 	def get_resources(self):
 		pass
 		
