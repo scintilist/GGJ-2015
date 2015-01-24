@@ -51,7 +51,32 @@ class Player(Game_Obj):
 		# DO STUFF HERE
 		
 		super().update_sprite()
-		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 # 
 #	TEST OBJECT PLEASE IGNORE
 #		

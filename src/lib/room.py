@@ -7,6 +7,8 @@ from . import game_obj
 class Room:
 	def __init__(self, width = 1920, height = 1080, player = None, g_scale = 1.0):
 		self.g_scale = g_scale
+		self.width = width
+		self.height = height
 		
 		# Player is a game object w/ event handlers
 		self.player = player
@@ -42,7 +44,6 @@ class TestRoom(Room):
 
 		# Get image from file
 		bg_img = pyglet.resource.image("rockstarguy.jpg")
-		
 		self.bg_sprite = pyglet.sprite.Sprite(bg_img, x = 0, y = 0, batch = self.batch, group = self.layers[0])
 		self.bg_sprite.scale = self.g_scale
 
@@ -50,13 +51,14 @@ class TestRoom(Room):
 		# self.fg_sprite = pyglet.sprite.Sprite(fg_img, x = 0, y = 0, batch = self.batch, group = self.layers[-1])
 		# self.fg_sprite.scale = self.g_scale
 		
+		self.get_resources()
+		self.build_objects()
+		
+	def get_resources(self):
 		# Create animation from file
-		nums_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
+		self.nums_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
 		
-		self.objects.append(game_obj.Game_Obj(nums_animation, batch = self.batch, group = self.layers[1], 
-			x = width/2, y = height/2, g_scale = g_scale, scale = 1.0))
-		
-		
-		
-		
-		
+	def build_objects(self):
+		# Create animated room object from animation
+		self.objects.append(game_obj.Game_Obj(self.nums_animation, batch = self.batch, group = self.layers[1], 
+			x = self.width/2, y = self.height/2, g_scale = self.g_scale, scale = 2))
