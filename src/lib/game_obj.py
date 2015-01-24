@@ -1,9 +1,12 @@
 from . import anim_sprite
 from .public_record import PublicRecord
+from . import util
 
 class Game_Obj():
 	''' Some game object containing a sprite, draw method, and things to do on update'''
-	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255, record = PublicRecord()):
+	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, 
+			rotation = 0, visible = True, opacity = 255, record = PublicRecord(),
+			x_range = (float('-inf'), float('+inf')), y_range = (float('-inf'), float('+inf'))):
 		self.sprite = anim_sprite.Anim_Sprite(image, x*g_scale, y*g_scale, batch = batch, group = group)
 		
 		# Sprite stuff
@@ -24,6 +27,9 @@ class Game_Obj():
 		self.vx = 0
 		self.vy = 0
 		
+		self.x_range = x_range
+		self.y_range = y_range
+		
 	def update(self, dt):
 		self.update_position(dt)
 		self.update_sprite()
@@ -33,6 +39,10 @@ class Game_Obj():
 		self.x += self.vx
 		self.y += self.vy
 		self.rotation += self.theta
+		
+		# Constrain object to range rectangle
+		self.x = util.constrain(self.x, *self.x_range)
+		self.y = util.constrain(self.y, *self.y_range)
 			
 	def update_sprite(self):
 		self.sprite.x = self.x * self.g_scale
@@ -69,7 +79,8 @@ class Player(Game_Obj):
 		
 	def update_sprite(self):
 		# Enable if you want the player to shrink as they walk up the screen
-		z_scale = 1 #- .5*(self.y / 1080)
+		z_scale = 1   - self.y / 1080
+		# CUT HERE  ^
 		
 		self.sprite.x = self.x * self.g_scale
 		self.sprite.y = self.y * self.g_scale

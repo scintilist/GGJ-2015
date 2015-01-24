@@ -13,8 +13,8 @@ def get_pixel_alpha(img, x, y):
 	return pixels[y * pitch + x * len(format) + 3]
 					
 
-def make_animation(fn_base, frame_count = 0, num_digits = 2, center = False, loop = True, duration = 1):
-	frame_list = get_frame_list(fn_base, frame_count, num_digits, center)
+def make_animation(fn_base, frame_count = 0, num_digits = 2, center = False, center_x = False, loop = True, duration = 1):
+	frame_list = get_frame_list(fn_base, frame_count, num_digits, center, center_x)
 	return pyglet.image.Animation.from_image_sequence(frame_list, duration, loop = True)
 
 def center_image(image):
@@ -22,7 +22,7 @@ def center_image(image):
     image.anchor_x = image.width/2
     image.anchor_y = image.height/2
 
-def get_frame_list(fn_base, frame_count = 0, num_digits = 2, center = False):
+def get_frame_list(fn_base, frame_count = 0, num_digits = 2, center = False, center_x = False):
 	fn, ext = fn_base.split('.')
 	frame_list = []
 	for i in range(1, frame_count+1):
@@ -30,6 +30,8 @@ def get_frame_list(fn_base, frame_count = 0, num_digits = 2, center = False):
 		img = pyglet.resource.image(name)
 		if(center):
 			center_image(img)
+		if(center_x):
+			img.anchor_x = img.width/2
 		frame_list.append(img)
 	return frame_list
 
