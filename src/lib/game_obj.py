@@ -211,7 +211,7 @@ class Rockstar(Game_Obj):
 			self.rot_v *= -1
 			
 		super().update_sprite()
-			
+
 class Spinning_Nums(Rockstar):
 	''' Performs a sweet animated transform on the sprite contained within'''
 	def __init__(self, image, batch = None, group = None, x = 400, y = 300, g_scale = 1.0, scale = 1.0, rotation = 0, visible = True, opacity = 255, room = None):
@@ -227,4 +227,10 @@ class Spinning_Nums(Rockstar):
 		self.scale = 0
 
 		self.opacity = 128
+
+	def mouse_click(self, x, y):
+		if util._dist(self.x, self.y, self.room.player.x, self.room.player.y) < 100:
+			print("DIALOG")
+		else:
+			print("NO DIALOG")
 		

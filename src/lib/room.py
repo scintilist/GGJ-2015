@@ -81,6 +81,7 @@ class Room:
 	def update(self, dt):
 		# Room updates here
 		for obj in self.objects:
+			obj.room = self
 			obj.update(dt)
 
 	def cleanup(self):
