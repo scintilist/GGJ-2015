@@ -102,13 +102,51 @@ class Room:
 		
 	# Mouse
 	def on_mouse_press(self, x, y, button, modifiers):
-		if button == LEFT:
-			pass
+		if button == mouse.LEFT:
 			# Get a list of objects mouse is over
+
+			# Unscaled mouse cords
+			m_x = x / self.g_scale
+			m_y = y / self.g_scale
 			
-			# Sort by layer
+			mouse_over_objs = []
+			
+			for obj  in self.objects:
+				try: # Try image directly
+					img = obj.sprite.image
+					
+					left = obj.x - img.anchor_x
+					bottom = obj.y - img.anchor_y
+					
+					right = obj.x - img.anchor_x + img.width
+					top = obj.y - img.anchor_y + img.height
+				except: # Assume animation
+					img = obj.sprite._animation.frames[obj.sprite._frame_index].image
+					
+					left = obj.x - img.anchor_x
+					bottom = obj.y - img.anchor_y
+					
+					right = obj.x - img.anchor_x + img.width
+					top = obj.y - img.anchor_y + img.height
+				
+				if not (m_x < left or m_x > right or m_y < bottom or m_y > top):
+					x = m_x - left
+					y = m_y - bottom
+					alpha_val = util.get_pixel_alpha(img, int(x), int(y))
+					if alpha_val > 0:
+						mouse_over_objs.append(obj)
+			
+			# Sort by layer key
+			mouse_over_objs.sort(key = lambda x: x.sprite.group, reverse = True)
+			
 			# Try to call in layer order, then return True
-		
+			for obj in mouse_over_objs:
+				try:
+					obj.mouse_click(m_x, m_y)
+					return True
+				except:
+					pass
+					
 		return True # The buck stops here
 
 		

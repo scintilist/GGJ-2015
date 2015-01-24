@@ -72,6 +72,9 @@ class Player(Game_Obj):
 		self.sprite.rotation = self.rotation
 		self.sprite.visible = self.visible
 		self.sprite.opacity = self.opacity
+		
+	def mouse_click(self, x, y):
+		self.visible = not self.visible
 	
 	# Left and right movement
 	def left_press(self):

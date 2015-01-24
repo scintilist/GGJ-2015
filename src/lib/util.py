@@ -5,6 +5,14 @@ import pyglet
 
 # Animation/images
 
+def get_pixel_alpha(img, x, y):
+	rawimage = img.get_image_data()
+	format = 'RGBA'
+	pitch = rawimage.width * len(format)
+	pixels = rawimage.get_data(format, pitch)
+	return pixels[y * pitch + x * len(format) + 3]
+					
+
 def make_animation(fn_base, frame_count = 0, num_digits = 2, center = False, loop = True, duration = 1):
 	frame_list = get_frame_list(fn_base, frame_count, num_digits, center)
 	return pyglet.image.Animation.from_image_sequence(frame_list, duration, loop = True)
