@@ -16,7 +16,7 @@ window = pyglet.window.Window(config=config,
 	# fullscreen=True, # Fullscreen
 	width = int(abs_width * global_scale),
 	height = int(abs_height * global_scale),
-	resizable=False,
+	resizable = False,
 	)
 
 # Background color
