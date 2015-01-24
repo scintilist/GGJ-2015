@@ -1,4 +1,7 @@
-from utilities import util
+import pyglet
+from pyglet.gl import *
+
+from . import util
 
 class Room:
 	def __init__(self, width = 1920, height = 1080, player = None, g_scale = 1.0):

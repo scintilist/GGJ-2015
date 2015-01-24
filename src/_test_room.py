@@ -14,8 +14,8 @@ config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 window = pyglet.window.Window(config=config, 
 	#height=600, width=800, # Windowed
 	# fullscreen=True, # Fullscreen
-	width = abs_width * global_scale,
-	height = abs_height * global_scale,
+	width = int(abs_width * global_scale),
+	height = int(abs_height * global_scale),
 	resizable=True
 	)
 
@@ -71,10 +71,6 @@ def update(dt):
 	#
 	for obj in objs:
 		obj.update(dt)
-	
-
-if __name__ == '__main__':
-	main()
 
 
 ####				
