@@ -23,9 +23,8 @@ class Room:
 		self.state = STATE_FREEMOVE
 		
 		# Player is a game object w/ event handlers
-		# self.player = player
-		player_img = pyglet.resource.image("num01.png")
-		self.player = game_obj.Player(player_img, None, x = 50, y = 50, g_scale = g_scale)
+		player_img = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center = True, loop = True, duration = .02)
+		self.player = game_obj.Player(player_img, None, x = 100, y = 50, g_scale = g_scale)
 
 		# Batches ain't shit but groups and tricks
 		self.batch = pyglet.graphics.Batch()

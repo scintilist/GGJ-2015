@@ -35,7 +35,13 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 counter = pyglet.clock.ClockDisplay()
 
 # Load resources
-pyglet.resource.path = ['../art']
+pyglet.resource.path = [
+		'../art',
+		'../art/Nums',
+		'../art/Kim_Walking',
+		'../art/Backgrounds',
+]
+
 pyglet.resource.reindex()
 
 rooms = {
