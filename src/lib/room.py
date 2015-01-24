@@ -5,6 +5,7 @@ from pyglet.window import mouse
 
 from . import util
 from . import game_obj
+from . import roomchangedispatcher
 
 STATE_FREEMOVE = 0
 STATE_DIALOG = 1
@@ -16,6 +17,8 @@ class Room:
 		self.width = width
 		self.height = height
 		self.window = window
+
+		self.room_changer = roomchangedispatcher.RoomChangeDispatcher()
 		
 		self.state = STATE_FREEMOVE
 		
@@ -78,6 +81,9 @@ class Room:
 		elif symbol == key.S:
 			if self.state == STATE_FREEMOVE:
 				self.player.down_press()
+
+		elif symbol == key.Q:
+			self.room_changer.change_room("maddie")
 				
 		return True # The buck stops here
 		

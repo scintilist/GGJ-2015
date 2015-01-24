@@ -6,6 +6,7 @@ from lib import game_obj
 from lib import util
 from lib import room
 from lib import placeholder_room
+from lib import roomchangedispatcher
 
 global_scale = .5
 
@@ -31,6 +32,10 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 # FPS counter display
 counter = pyglet.clock.ClockDisplay()
 
+# Register new event handlers
+# roomchangedispatcher.RoomChangeDispatcher.register_event_type('on_room_change')
+window.register_event_type('on_room_change')
+
 # Load resources
 pyglet.resource.path = ['../art']
 pyglet.resource.reindex()
@@ -41,33 +46,34 @@ player = game_obj.Player(player_img, None, x = 50, y = 50, g_scale = global_scal
 active_room_idx = 0
 active_room = None
 
-rooms = []
 r = room.GameRoom(abs_width, abs_height, player, g_scale = global_scale, window = window)
 r2 = placeholder_room.PlaceholderRoom(abs_width, abs_height, player, g_scale = global_scale, window = window)
 
 active_room = r
 active_room.activate_room()
 
-rooms = [r, r2]
+# rooms = [r, r2]
+rooms = {
+	"rockstar": r,
+	"maddie":   r2,
+}
 
 # Set up room switch handle
-def on_key_press(symbol, modifier):
+def on_room_change(room_name):
+	print("hey")
+	global rooms
 	global active_room
-	global active_room_idx
 
-	if symbol == key.Q:
-		active_room_idx = (active_room_idx+1) % len(rooms)
-		active_room = rooms[active_room_idx]
+	if room_name in rooms:
+		active_room = rooms[room_name]
 		active_room.activate_room()
-
 		player.x = 50
 		player.y = 50
+window.push_handlers(on_room_change)
 
-		return True
-	return False
 
 # Must do this after room creation to hit top of stack
-window.push_handlers(on_key_press)
+# window.push_handlers(on_key_press)
 
 @window.event
 def on_draw():
