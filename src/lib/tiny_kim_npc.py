@@ -1,7 +1,8 @@
-from .game_obj import GameObj
+from .base_npc import NPC
 from . import util
+from .dialog_data import tiny_kim_1
 
-class TinyKim(GameObj):
+class TinyKim(NPC):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
 			visible = True, opacity = 255, room = None):
 		# Get object initial image
@@ -9,8 +10,8 @@ class TinyKim(GameObj):
 		room.kim_idle_left = room.kim_idle_right.get_transform(flip_x = True)
 		image = room.kim_idle_left
 		
+		# Build base NPC
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
-	
-	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
-	def mouse_click(self, x, y):
-		self.room.set_active_npc(self)
+		
+		self.convo = tiny_kim_1
+		self.what_im_saying = ""

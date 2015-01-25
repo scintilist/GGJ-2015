@@ -17,3 +17,16 @@ rodman_1 = (N1, {
 		K4: ("", None),
 	}
 })
+
+tiny_kim_1 = (N2, {
+	N1: {
+		K1: (N2, None),
+		K2: (N2, None),
+		K3: (N2, None),
+	},
+
+	N2: {
+		K4: ("", None),
+	}
+})
+

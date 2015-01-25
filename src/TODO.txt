@@ -11,7 +11,11 @@
 -build floavors
 -build some more rooms
 
+-
 
 
 -should: dynamically add the number of kim boxes based on number needed
 	-create and destry kim boxes on dialog creation
+	
+	
+-end game????
