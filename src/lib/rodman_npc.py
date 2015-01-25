@@ -1,6 +1,6 @@
 from .base_npc import NPC
 from . import util
-from .dialog_data import rodman_1
+from .dialog_data import rodman_1, rodman_hate_convo, rodman_love_convo
 
 class Rodman(NPC):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
@@ -14,3 +14,12 @@ class Rodman(NPC):
 		
 		self.convo = rodman_1
 		self.what_im_saying = ""
+		
+	def start_converstion(self):
+		self.convo = rodman_1
+		if "rodman_hate" in self.record["choices"]:
+			self.convo = rodman_hate_convo
+		elif "rodman_love" in self.record["choices"]:
+			self.convo = rodman_love_convo
+
+		super().start_conversation()

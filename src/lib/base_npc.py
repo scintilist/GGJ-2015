@@ -8,7 +8,7 @@ class NPC(GameObj):
 		
 		self.convo = None
 		self.what_im_saying = ""
-	
+			
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
 	def mouse_click(self, x, y):
 		self.room.set_active_npc(self)
@@ -20,7 +20,6 @@ class NPC(GameObj):
 		
 		i = 0
 		for msg in self.convo[1][self.what_im_saying]:
-			print(msg)
 			kb = self.room.kim_boxes[i]
 			kb.show()
 			kb.set_text_string(msg)
@@ -33,13 +32,16 @@ class NPC(GameObj):
 			
 		my_current = self.convo[1][self.what_im_saying]
 		my_response = my_current[text][0]
+		record_choice = my_current[text][1]
 		
+		if record_choice != "":
+			# Put Kim's choice in the public record
+			self.record["choices"][record_choice] = True
 		if my_response == "":
 			self.room.end_dialog()
 		else:
 			i = 0
 			for msg in self.convo[1][my_response]:
-				print(msg)
 				kb = self.room.kim_boxes[i]
 				kb.show()
 				kb.set_text_string(msg)
