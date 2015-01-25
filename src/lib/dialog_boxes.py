@@ -24,22 +24,93 @@ class NPCDialog(GameObj):
 		image = pyglet.resource.image("npc_dialog.png")
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
 
-		self.label = pyglet.text.Label("That's okay; I wouldn't expect anyone to recognize little ol' me anymore.",
-			  font_name='Helvetica',
-			  font_size=12,
-			  # x = self.x * g_scale, y = self.y * g_scale,
-			  x = self.x * self.g_scale, y = self.y * self.g_scale,
-			  anchor_x='left', anchor_y='bottom', batch = self.room.batch, group = self.room.layers[self.room.player_layer+3],
-			  multiline = True,
-			  width = 640 * self.g_scale,
-			  height = 270 * self.g_scale,
-			  color = (0, 0, 0, 255),
-			)
+		# Set hidden to true to allow show() to run unimpeded
+		self.hidden = True
+		self.show()
 		# self.label.set_style('background_color', (0, 0, 0, 255))'''
+
+	def hide(self):
+		if self.hidden:
+			return
+		else:
+			self.hidden = True
+
+		self.visible = False
+		# self.label.batch = None
+		self.label.delete()
+		# del self.label
+
+	def show(self):
+		if not self.hidden:
+			return
+		else:
+			self.hidden = False
+
+		self.label = pyglet.text.Label("That's okay; I wouldn't expect anyone to recognize little ol' me anymore.",
+		  font_name='Helvetica',
+		  font_size=12,
+		  # x = self.x * g_scale, y = self.y * g_scale,
+		  x = self.x * self.g_scale, y = self.y * self.g_scale,
+		  anchor_x='left', anchor_y='bottom', batch = self.room.batch, group = self.room.layers[self.room.player_layer+3],
+		  multiline = True,
+		  width = 640 * self.g_scale,
+		  height = 270 * self.g_scale,
+		  color = (0, 0, 0, 255),
+		  align = "center",
+		)
+
+		self.label.content_valign = "center"
+
+		self.visible = True
+		# self.label.batch = self.room.batch
 
 class KimDialog(GameObj):
 	def __init__(self, image = None, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
-			visible = True, opacity = 255, room = None):
+			visible = True, opacity = 255, room = None, number = 0):
 		# Get the image here	
 		image = pyglet.resource.image("kim_dialog.png")
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
+
+		self.number = number
+
+		# Set hidden to true to allow show() to run unimpeded
+		self.hidden = True
+		self.show()
+
+	def hide(self):
+		if self.hidden:
+			return
+		else:
+			self.hidden = True
+
+		self.visible = False
+		# self.label.batch = None
+		self.label.delete()
+		# del self.label
+
+	def show(self):
+		if not self.hidden:
+			return
+		else:
+			self.hidden = False
+
+		self.label = pyglet.text.Label("go fuk urself",
+		  font_name='Helvetica',
+		  font_size=12,
+		  # x = self.x * g_scale, y = self.y * g_scale,
+		  x = self.x * self.g_scale, y = self.y * self.g_scale,
+		  anchor_x='left', anchor_y='bottom', batch = self.room.batch, group = self.room.layers[self.room.player_layer+3],
+		  multiline = True,
+		  width = 640 * self.g_scale,
+		  height = 90 * self.g_scale,
+		  color = (0, 0, 0, 255),
+		  align = "center",
+		)
+
+		self.label.content_valign = "center"
+
+		self.visible = True
+		self.label.batch = self.room.batch
+
+	def mouse_click(self, x, y):
+		print("clicked: #" + str(self.number))

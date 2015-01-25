@@ -5,6 +5,7 @@ from pyglet.window import mouse
 
 from . import util
 from .player import Player
+from .dialog_boxes import *
 
 STATE_FREEMOVE = 0
 STATE_DIALOG = 1
@@ -19,6 +20,8 @@ class Room:
 		self.window = space_base.window
 		self.record = space_base.record
 		self.room_name = room_name
+
+		self.active_npc = None
 		
 		self.state = STATE_FREEMOVE
 
@@ -40,6 +43,19 @@ class Room:
 		
 		# Add player here, player is a game object w/ event handlers
 		self.player = self.add_object(Player, layer_offset = 0, x = 600, y = 50, scale = 1)
+
+
+		# Add an NPC dialog box and three Kim dialog boxes
+		self.npc_dialog_box = self.add_object(NPCDialog, layer_offset = 2, x = (1920/2 - 640/2), y = (1080/2 + 270/2), scale = 1.0)
+		self.npc_dialog_box.hide()
+
+		# Add some Kim dialog boxes
+		self.kim_box_0 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*1, scale = 1.0, number = 0)
+		self.kim_box_1 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*2, scale = 1.0, number = 1)
+		self.kim_box_2 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*3, scale = 1.0, number = 2)
+		self.kim_boxes = [self.kim_box_0, self.kim_box_1, self.kim_box_2]
+		for kb in self.kim_boxes:
+			kb.hide()
 		
 		if "player_pos" in self.record[self.room_name]:
 			pos = self.record[self.room_name]["player_pos"]

@@ -35,5 +35,3 @@ class PlaceholderRoom(Room):
 		# Create room objects
 		self.add_object(Rodman, layer_offset = 1, x = 1600, y = 50, scale = 1.0)
 		self.add_object(TinyKim, layer_offset = 1, x = 1000, y = 50, scale = .4)
-		
-		self.add_object(NPCDialog, None, layer_offset = 2, x = (1920/2 - 640/2), y = (1080/2 - 270/2), scale = 1.0)
