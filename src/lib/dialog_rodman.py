@@ -20,28 +20,45 @@ K6 = "What did I say?"
 LOVE_RESP = "Thank you! Aw, you're embarrassing me!"
 HATE_RESP = "Well fuck you too, you Gangnam ass piece of shit!"
 
+class RodmanDialog:
+	def __init__(self, record):
+		self.record = record
 
+	def rodman_1(self):
+		return (N1, {
+			N1: {
+				K1: (N2, "rodman_spoken_to"),
+				K2: (N2, "rodman_spoken_to"),
+				K3: (N2, "rodman_spoken_to"),
+			},
 
-rodman_1 = (N1, {
-	N1: {
-		K1: (N2, "rodman_spoken_to"),
-		K2: (N2, "rodman_spoken_to"),
-		K3: (N2, "rodman_spoken_to"),
-	},
+			N2: {
+				K4: (HATE_RESP, "rodman_hate"),
+				K5: (LOVE_RESP, "rodman_love"),
+			},
 
-	N2: {
-		K4: (HATE_RESP, "rodman_hate"),
-		K5: (LOVE_RESP, "rodman_love"),
-	},
+			LOVE_RESP: {
+				BYE: ("", ""),
+			},
 
-	LOVE_RESP: {
-		BYE: ("", ""),
-	},
+			HATE_RESP: {
+				BYE: ("", ""),
+			},
+		})
 
-	HATE_RESP: {
-		BYE: ("", ""),
-	},
-})
+	def rodman_followup(self):
+		start = N3 if self.record["choices"]["rodman_hate"] else N5
+		response = N4 if self.record["choices"]["rodman_hate"] else N6
+
+		return (start, {
+			start: {
+				K6: (response, ""),
+			},
+
+			response: {
+				BYE: ("", ""),
+			},
+		})
 
 rodman_hate_convo = (N3, {
 	N3: {

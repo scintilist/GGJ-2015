@@ -14,16 +14,18 @@ class TinyKim(NPC):
 		
 		# Build base NPC
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
+
+		self.dialog_manager = TinyKimDialog(self.record)
 		
-		self.convo = tiny_kim_1
+		self.convo = self.dialog_manager.info1()
 		self.what_im_saying = ""
 
 	def start_conversation(self):
 		if "tinykim_info_done" in self.record["choices"]:
 			if "rodman_spoken_to" in self.record["choices"]:
-				self.convo = post_rodman
+				self.convo = self.dialog_manager.post_rodman()
 			else:
-				self.convo = tiny_kim_nag
+				self.convo = self.dialog_manager.nag()
 		else:
 			print(self.record["choices"])
 
