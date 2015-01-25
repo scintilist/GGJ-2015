@@ -45,15 +45,14 @@ class Player(GameObj):
 		print('player clicked on')
 	
 	def on_animation_end(self):
-		if self.sprite.image is not self.next_image:
-			self.sprite.image = self.next_image
+		self.sprite.image = self.next_image
 		
 	def set_image_now(self, new_image):
 		'''Set the image and set frame to 0 if different'''
 		if self.sprite.image is not new_image:
 			self.sprite.image = new_image
 			self.sprite.set_frame(0)
-			self.next_image = new_image
+		self.next_image = new_image
 	
 	# Left and right movement
 	def left_press(self):

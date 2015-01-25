@@ -27,6 +27,7 @@ class Anim_Sprite(pyglet.sprite.Sprite):
 		self._set_texture(frame.image.get_texture())
 
 		if frame.duration is not None:
+			pyglet.clock.unschedule(self._animate)
 			pyglet.clock.schedule_once(self._animate, frame.duration)
 			
 		else:
