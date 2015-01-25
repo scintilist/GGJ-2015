@@ -28,5 +28,4 @@ class TinyKim(NPC):
 				self.convo = self.dialog_manager.nag()
 		else:
 			print(self.record["choices"])
-
 		super().start_conversation()

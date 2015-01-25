@@ -20,15 +20,14 @@ class NPC(GameObj):
 	def draw_dialog(self):
 		self.clear_dialog()
 		# Add an NPC dialog box and three Kim dialog boxes
-		self.npc_dialog_box = self.room.add_object(NPCDialog, layer_offset = 2, x = self.room.width/2, y = self.room.height/2 + 270/2,
+		self.npc_dialog_box = self.room.add_object(NPCDialog, layer_offset = 2, x = self.room.width/2, y = self.room.height/2 + 200,
 			scale = 1.0, text_string = self.what_im_saying)
 		i = 0
 		for msg in self.convo[1][self.what_im_saying]:
 			new_kb = self.room.add_object(KimDialog, layer_offset = 2, x = self.room.width/2, y = self.npc_dialog_box.y - 90*(len(self.kb)+1),
 				scale = 1.0, text_string = msg)
-			self.kb.append(new_kb)	
+			self.kb.append(new_kb)
 			i += 1
-		print ('drawing all')
 			
 	def clear_dialog(self):
 		try:
@@ -55,7 +54,6 @@ class NPC(GameObj):
 		record_choice = my_current[text][1]
 		
 		if record_choice and record_choice != "":
-			print(record_choice)
 			# Put Kim's choice in the public record
 			self.record["choices"][record_choice] = True
 		if my_response == "":

@@ -17,8 +17,10 @@ class NPCDialog(GameObj):
 		self.set_text_string(text_string)
 		
 	def __del__(self):
-		if self.label:
+		try:
 			self.label.delete()
+		except:
+			pass
 
 	def set_text_string(self, new_string):
 		self.text_string = new_string
@@ -61,8 +63,10 @@ class KimDialog(GameObj):
 		self.set_text_string(text_string)
 		
 	def __del__(self):
-		if self.label:
+		try:
 			self.label.delete()
+		except:
+			pass
 		
 	def set_text_string(self, new_string):
 		self.text_string = new_string
