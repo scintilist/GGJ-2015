@@ -1,3 +1,4 @@
+import sys
 import pyglet
 
 from .game_obj import GameObj
@@ -38,6 +39,9 @@ class PlayButton(GameObj):
 
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
 	def mouse_release(self, x, y):
-		self.visible = False
-		if self.room.is_over_object(self, x, y):
-			self.room.room_changer.change_room("placeholder")
+		try:
+			self.visible = False
+			if self.room.is_over_object(self, x, y):
+				self.room.room_changer.change_room("placeholder")
+		except:
+			print(sys.exc_info())

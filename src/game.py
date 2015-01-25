@@ -40,6 +40,7 @@ pyglet.resource.path = [
 		'../art/Backgrounds',
 		'../art/KimIdelV2_',
 		'../art/KimWalkV2_',
+		'../art/dialog',
 ]
 
 pyglet.resource.reindex()

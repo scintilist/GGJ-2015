@@ -9,6 +9,7 @@ from .room import *
 from .public_record import PublicRecord
 from .game_obj import GameObj
 from .base_npc import NPC
+from .dialog_boxes import *
 
 class PlaceholderRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
@@ -44,3 +45,5 @@ class PlaceholderRoom(Room):
 		# Create animated room object from animation
 
 		self.add_object(NPC, self.npc_animation, layer_offset = 1, x = 600, y = 50, scale = .4)
+
+		self.add_object(NPCDialog, None, layer_offset = 2, x = (1920/2 - 640/2), y = (1080/2 - 270/2), scale = 1.0)
