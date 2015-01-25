@@ -3,6 +3,11 @@
 # Upon completing this conversation, Franco will leave the lounge
 
 
-F: Oh... Hey. [1]
-KJ:[1]Who are you? [1]/[1]James Franco!?!, What are you doing on the moon? [2]/[1]So, Franco, we meet again. [3]
-F:[1] That's okay, I wouldn't expect anybody to recognize little ol' me anymore.
+F: 
+ Oh... Hey. [1]
+KJ:
+ [1]Who are you? [1]
+ [1]James Franco!?!, What are you doing on the moon? [2]
+ [1]So, Franco, we meet again. [3]
+F:
+ [1] That's okay, I wouldn't expect anybody to recognize little ol' me anymore.

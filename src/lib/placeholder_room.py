@@ -6,6 +6,7 @@ from pyglet.window import mouse
 from . import util
 from .room import *
 from .base_npc import NPC
+from .dialog_boxes import *
 
 class PlaceholderRoom(Room):
 	def __init__(self, space_base = None, room_name = 'placeholder', start_x = 400, start_y = 0):
@@ -30,6 +31,6 @@ class PlaceholderRoom(Room):
 		super().on_key_press(symbol, modifier)
 		
 	def build_objects(self):
-		pass
 		# Create room objects
 		self.add_object(NPC, layer_offset = 1, x = 600, y = 50, scale = 1.0)
+		self.add_object(NPCDialog, None, layer_offset = 2, x = (1920/2 - 640/2), y = (1080/2 - 270/2), scale = 1.0)
