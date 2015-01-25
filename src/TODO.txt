@@ -1,9 +1,6 @@
 -need art for:
 	-big text box
 	-little text box
-
--subclass rodman and kim npc
-	(start convo and box clicked are currently in rodman_npc)
 	
 -NPC chooses convo based on public record and room
 -Dialog can update public record
