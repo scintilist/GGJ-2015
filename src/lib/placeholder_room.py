@@ -32,4 +32,4 @@ class PlaceholderRoom(Room):
 	def build_objects(self):
 		pass
 		# Create room objects
-		self.add_object(NPC, layer_offset = 1, x = 600, y = 50, scale = .4)
+		self.add_object(NPC, layer_offset = 1, x = 600, y = 50, scale = 1.0)

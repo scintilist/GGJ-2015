@@ -22,6 +22,8 @@ class MenuRoom(Room):
 		self.build_objects()
 		
 	def on_key_press(self, symbol, modifier):
+		# MenuRoom captured keys here
+	
 		#if symbol == key._2:
 		#	self.room_changer.change_room("placeholder")
 		#	return True
