@@ -17,6 +17,9 @@ K5 = "I love you!"
 
 K6 = "What did I say?"
 
+LOVE_RESP = "Thank you! Aw, you're embarrassing me!"
+HATE_RESP = "Well fuck you too, you Gangnam ass piece of shit!"
+
 
 
 rodman_1 = (N1, {
@@ -27,8 +30,16 @@ rodman_1 = (N1, {
 	},
 
 	N2: {
-		K4: ("", "rodman_hate"),
-		K5: ("", "rodman_love"),
+		K4: (HATE_RESP, "rodman_hate"),
+		K5: (LOVE_RESP, "rodman_love"),
+	},
+
+	LOVE_RESP: {
+		BYE: ("", ""),
+	},
+
+	HATE_RESP: {
+		BYE: ("", ""),
 	},
 })
 

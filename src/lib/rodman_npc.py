@@ -50,14 +50,13 @@ class Rodman(GameObj):
 		my_response = my_current[text][0]
 		record_choice = my_current[text][1]
 		
+		if record_choice != "":
+			# Put Kim's choice in the public record
+			self.record["choices"][record_choice] = True
 		if my_response == "":
 			# End the dialog
 			self.room.npc_dialog_box.hide()
 			self.room.active_npc = None
-		if record_choice != "":
-			# Put Kim's choice in the public record
-			self.record["choices"][record_choice] = True
-			print("recording choice " + record_choice)
 		else:
 			i = 0
 			for msg in self.convo[1][my_response]:
