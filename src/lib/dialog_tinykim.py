@@ -11,10 +11,14 @@ TK_INFO1_HAPPY = "Hey, I've got a status update for you on the status of Space K
 TK_INFO2 = "It's been four days since the meteors hit back home. Our people are starting to get a little restless."
 TK_INFO3 = "They don't know what to do with this new home. There are barely any jobs to occupy them. Even the work camps are a little lax."
 TK_INFO4 = "Dennis Rodman came with us, as well. Maybe you could consult with him on matters of morale. He's in the room to the right."
-TK_INFO5 = "What do we do now, Big Supreme Leader?"
+TK_INFO5 = "You can hit the SPACE BAR to go there."
+TK_INFO6 = "Please help us, Big Supreme Leader."
 
 BYE_CONFIDENT = "I'll take care of this."
-BYE_APPREHENSIVE = "I'm not really sure, myself...."
+BYE_APPREHENSIVE = "I'm not really sure what to do, myself...."
+
+OK_NICE = "Thank you, Tiny Kim. I will travel posthaste."
+OK_RUDE = "What the fuck is a space bar?"
 
 REMINDER = "Remember, Rodman is to the right."
 REMINDER_OK = "Got it."
@@ -61,6 +65,11 @@ class TinyKimDialog:
 			},
 
 			TK_INFO5: {
+				OK_NICE: (TK_INFO6, ""),
+				OK_RUDE: (TK_INFO6, ""),
+			},
+
+			TK_INFO6: {
 				BYE_CONFIDENT: ("", "tinykim_info_done"),
 				BYE_APPREHENSIVE: ("", "tinykim_info_done"),
 			},
