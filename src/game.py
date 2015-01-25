@@ -39,6 +39,7 @@ pyglet.resource.path = [
 		'../art/KimWalkV2_',
 		'../art/RodmanIdel_',
 		'../art/FrancoIdel_',
+		'../art/MERKLE',
 		'../art/dialog',
 ]
 pyglet.resource.reindex()

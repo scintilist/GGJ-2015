@@ -8,6 +8,7 @@ from .room import *
 from .tiny_kim_npc import TinyKim
 from .rodman_npc import Rodman
 from .franco_npc import Franco
+from .merkel_npc import Merkel
 from .dialog_boxes import *
 
 class PlaceholderRoom2(Room):
@@ -38,4 +39,5 @@ class PlaceholderRoom2(Room):
 		# Create room objects
 		self.add_object(Rodman, layer_offset = 1, x = 1600, y = 50, scale = 1.0)
 		# self.add_object(TinyKim, layer_offset = 1, x = 1100, y = 50, scale = .4)
-		self.add_object(Franco, layer_offset = 1, x = 800, y = 50, scale = 1.0)
+		self.add_object(Merkel, layer_offset = 1, x = 800, y = 50, scale = 1.0)
+		self.add_object(Franco, layer_offset = 1, x = 1200, y = 50, scale = 1.0)
