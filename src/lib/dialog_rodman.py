@@ -24,9 +24,9 @@ HATE_RESP = "Well fuck you too, you Gangnam ass piece of shit!"
 
 rodman_1 = (N1, {
 	N1: {
-		K1: (N2, ""),
-		K2: (N2, ""),
-		K3: (N2, ""),
+		K1: (N2, "rodman_spoken_to"),
+		K2: (N2, "rodman_spoken_to"),
+		K3: (N2, "rodman_spoken_to"),
 	},
 
 	N2: {

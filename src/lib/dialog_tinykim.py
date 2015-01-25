@@ -23,28 +23,28 @@ REMINDER_OK = "Got it."
 
 tiny_kim_1 = (TK_GREET, {
 	TK_GREET: {
-		GREET_R1: (TK_INFO1_HAPPY, None),
-		GREET_R2: (TK_INFO1_SAD, None),
+		GREET_R1: (TK_INFO1_HAPPY, ""),
+		GREET_R2: (TK_INFO1_SAD, ""),
 	},
 
 	TK_INFO1_SAD: {
-		CONT: (TK_INFO2, None),
+		CONT: (TK_INFO2, ""),
 	},
 
 	TK_INFO1_HAPPY: {
-		CONT: (TK_INFO2, None),
+		CONT: (TK_INFO2, ""),
 	},
 
 	TK_INFO2: {
-		CONT: (TK_INFO3, None),
+		CONT: (TK_INFO3, ""),
 	},
 
 	TK_INFO3: {
-		CONT: (TK_INFO4, None),
+		CONT: (TK_INFO4, ""),
 	},
 
 	TK_INFO4: {
-		CONT: (TK_INFO5, None),
+		CONT: (TK_INFO5, ""),
 	},
 
 	TK_INFO5: {
@@ -55,6 +55,35 @@ tiny_kim_1 = (TK_GREET, {
 
 tiny_kim_nag = (REMINDER, {
 	REMINDER: {
-		REMINDER_OK: ("", None),
+		REMINDER_OK: ("", ""),
 	}
+})
+
+PR_START = "Have you talked to Dennis Rodman yet?"
+
+PR_YES_NICE = "Yeah! Really nice guy, D-Rod!"
+PR_YES_RUDE = "Yeah; fuck that guy."
+
+PR_1 = "Well, hopefully whatever you said will convince him to help us restore morale."
+PR_2 = "Lots of people still need food, and the moon rocks we're giving them don't actually have any protein."
+# PR_3 = "You should look around the station to find ways to help."
+PR_3 = "Unfortunately, the game isn't programmed past this point. Bye!"
+
+post_rodman = (PR_START, {
+	PR_START: {
+		PR_YES_NICE: (PR_1, ""),
+		PR_YES_RUDE: (PR_1, ""),
+	},
+
+	PR_1: {
+		CONT: (PR_2, ""),
+	},
+
+	PR_2: {
+		CONT: (PR_3, ""),
+	},
+
+	PR_3: {
+		BYE: ("", ""),
+	},
 })

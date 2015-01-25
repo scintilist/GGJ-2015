@@ -20,8 +20,10 @@ class TinyKim(NPC):
 
 	def start_conversation(self):
 		if "tinykim_info_done" in self.record["choices"]:
-			self.convo = tiny_kim_nag
-			print("nagging")
+			if "rodman_spoken_to" in self.record["choices"]:
+				self.convo = post_rodman
+			else:
+				self.convo = tiny_kim_nag
 		else:
 			print(self.record["choices"])
 
