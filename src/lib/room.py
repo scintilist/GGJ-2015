@@ -7,9 +7,6 @@ from . import util
 from .player import Player
 from .dialog_boxes import *
 
-STATE_FREEMOVE = 0
-STATE_DIALOG = 1
-
 class Room:
 	def __init__(self, space_base = None, room_name = 'default_room', start_x = 50, start_y = 50):
 		self.space_base = space_base
@@ -22,8 +19,6 @@ class Room:
 		self.room_name = room_name
 
 		self.active_npc = None
-		
-		self.state = STATE_FREEMOVE
 
 		# Batches ain't shit but groups and tricks
 		self.batch = pyglet.graphics.Batch()

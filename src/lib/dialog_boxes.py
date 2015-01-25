@@ -21,7 +21,7 @@ class NPCDialog(GameObj):
 	def __init__(self, image = None, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
 			visible = False, opacity = 255, room = None):
 		# Get the image here	
-		image = pyglet.resource.image("npc_dialog.png")
+		image = pyglet.resource.image("NPCSpeechBubble.png")
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
 		
 		self.label = None
@@ -62,7 +62,7 @@ class KimDialog(GameObj):
 	def __init__(self, image = None, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
 			visible = False, opacity = 255, room = None):
 		# Get the image here	
-		image = pyglet.resource.image("kim_dialog.png")
+		image = pyglet.resource.image("KimSpeechBubbleGreen.png")
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
 
 		self.label = None
