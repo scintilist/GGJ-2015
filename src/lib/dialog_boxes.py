@@ -100,8 +100,5 @@ class KimDialog(GameObj):
 
 	def mouse_click(self, x, y):
 		if not self.visible:
-			print("invisible; returning")
 			return
-		print("calling clicked")
 		self.room.kim_box_clicked(self.text_string)
-		print("clicked: " + str(self.text_string))
