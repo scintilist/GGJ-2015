@@ -11,15 +11,18 @@ class Rodman(NPC):
 		
 		# Build base NPC
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
+
+		self.dialog_manager = RodmanDialog(self.record)
 		
-		self.convo = rodman_1
+		self.convo = self.dialog_manager.rodman_1()
 		self.what_im_saying = ""
 		
 	def start_conversation(self):
-		self.convo = rodman_1
-		if "rodman_hate" in self.record["choices"]:
-			self.convo = rodman_hate_convo
-		elif "rodman_love" in self.record["choices"]:
-			self.convo = rodman_love_convo
+		import sys
+		try:
+			if "rodman_hate" in self.record["choices"] or "rodman_love" in self.record["choices"]:
+				self.convo = self.dialog_manager.rodman_followup()
 
-		super().start_conversation()
+			super().start_conversation()
+		except:
+			print(sys.exc_info())

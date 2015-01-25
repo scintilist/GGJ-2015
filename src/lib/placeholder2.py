@@ -8,10 +8,11 @@ from .room import *
 from .tiny_kim_npc import TinyKim
 from .rodman_npc import Rodman
 from .franco_npc import Franco
+from .merkel_npc import Merkel
 from .dialog_boxes import *
 
-class PlaceholderRoom(Room):
-	def __init__(self, space_base = None, room_name = 'placeholder', start_x = 800, start_y = 0):
+class PlaceholderRoom2(Room):
+	def __init__(self, space_base = None, room_name = 'placeholder2', start_x = 200, start_y = 0):
 		super().__init__(space_base, room_name, start_x, start_y)
 		
 		# Set player range constraints
@@ -30,12 +31,13 @@ class PlaceholderRoom(Room):
 			self.space_base.change_room("menu")
 			return True
 		elif symbol == key.SPACE:
-			self.space_base.change_room("placeholder2")
+			self.space_base.change_room("placeholder")
 
 		super().on_key_press(symbol, modifier)
 		
 	def build_objects(self):
 		# Create room objects
-		# self.add_object(Rodman, layer_offset = 1, x = 1600, y = 50, scale = 1.0)
-		self.add_object(TinyKim, layer_offset = 1, x = 1100, y = 50, scale = .4)
-		# self.add_object(Franco, layer_offset = 1, x = 400, y = 50, scale = 1.0)
+		self.add_object(Rodman, layer_offset = 1, x = 1600, y = 50, scale = 1.0)
+		# self.add_object(TinyKim, layer_offset = 1, x = 1100, y = 50, scale = .4)
+		self.add_object(Merkel, layer_offset = 1, x = 800, y = 50, scale = 1.0)
+		self.add_object(Franco, layer_offset = 1, x = 1200, y = 50, scale = 1.0)

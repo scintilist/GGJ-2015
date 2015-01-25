@@ -11,50 +11,95 @@ TK_INFO1_HAPPY = "Hey, I've got a status update for you on the status of Space K
 TK_INFO2 = "It's been four days since the meteors hit back home. Our people are starting to get a little restless."
 TK_INFO3 = "They don't know what to do with this new home. There are barely any jobs to occupy them. Even the work camps are a little lax."
 TK_INFO4 = "Dennis Rodman came with us, as well. Maybe you could consult with him on matters of morale. He's in the room to the right."
-TK_INFO5 = "What do we do now, Big Supreme Leader?"
+TK_INFO5 = "You can hit the SPACE BAR to go there."
+TK_INFO6 = "Please help us, Big Supreme Leader."
 
 BYE_CONFIDENT = "I'll take care of this."
-BYE_APPREHENSIVE = "I'm not really sure, myself...."
+BYE_APPREHENSIVE = "I'm not really sure what to do, myself...."
+
+OK_NICE = "Thank you, Tiny Kim. I will travel posthaste."
+OK_RUDE = "What the fuck is a space bar?"
 
 REMINDER = "Remember, Rodman is to the right."
 REMINDER_OK = "Got it."
 
+PR_START = "Have you talked to Dennis Rodman yet?"
+
+PR_YES_NICE = "Yeah! Really nice guy, D-Rod!"
+PR_YES_RUDE = "Yeah; fuck that guy."
+
+PR_1 = "Well, hopefully whatever you said will convince him to help us restore morale."
+PR_2 = "Lots of people still need food, and the moon rocks we're giving them don't actually have any protein."
+# PR_3 = "You should look around the station to find ways to help."
+PR_3 = "Unfortunately, the game isn't programmed past this point. Bye!"
+
+class TinyKimDialog:
+	def __init__(self, record):
+		self.record = record
+
+	def info1(self):
+		return (TK_GREET, {
+			TK_GREET: {
+				GREET_R1: (TK_INFO1_HAPPY, ""),
+				GREET_R2: (TK_INFO1_SAD, ""),
+			},
+
+			TK_INFO1_SAD: {
+				CONT: (TK_INFO2, ""),
+			},
+
+			TK_INFO1_HAPPY: {
+				CONT: (TK_INFO2, ""),
+			},
+
+			TK_INFO2: {
+				CONT: (TK_INFO3, ""),
+			},
+
+			TK_INFO3: {
+				CONT: (TK_INFO4, ""),
+			},
+
+			TK_INFO4: {
+				CONT: (TK_INFO5, ""),
+			},
+
+			TK_INFO5: {
+				OK_NICE: (TK_INFO6, ""),
+				OK_RUDE: (TK_INFO6, ""),
+			},
+
+			TK_INFO6: {
+				BYE_CONFIDENT: ("", "tinykim_info_done"),
+				BYE_APPREHENSIVE: ("", "tinykim_info_done"),
+			},
+		})
+
+	def nag(self):
+		return (REMINDER, {
+			REMINDER: {
+				REMINDER_OK: ("", ""),
+			}
+		})
+
+	def post_rodman(self):
+		return (PR_START, {
+			PR_START: {
+				PR_YES_NICE: (PR_1, ""),
+				PR_YES_RUDE: (PR_1, ""),
+			},
+
+			PR_1: {
+				CONT: (PR_2, ""),
+			},
+
+			PR_2: {
+				CONT: (PR_3, ""),
+			},
+
+			PR_3: {
+				BYE: ("", ""),
+			},
+		})
 
 
-tiny_kim_1 = (TK_GREET, {
-	TK_GREET: {
-		GREET_R1: (TK_INFO1_HAPPY, None),
-		GREET_R2: (TK_INFO1_SAD, None),
-	},
-
-	TK_INFO1_SAD: {
-		CONT: (TK_INFO2, None),
-	},
-
-	TK_INFO1_HAPPY: {
-		CONT: (TK_INFO2, None),
-	},
-
-	TK_INFO2: {
-		CONT: (TK_INFO3, None),
-	},
-
-	TK_INFO3: {
-		CONT: (TK_INFO4, None),
-	},
-
-	TK_INFO4: {
-		CONT: (TK_INFO5, None),
-	},
-
-	TK_INFO5: {
-		BYE_CONFIDENT: ("", "tinykim_info_done"),
-		BYE_APPREHENSIVE: ("", "tinykim_info_done"),
-	},
-})
-
-tiny_kim_nag = (REMINDER, {
-	REMINDER: {
-		REMINDER_OK: ("", None),
-	}
-})

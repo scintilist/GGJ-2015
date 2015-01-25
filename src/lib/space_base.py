@@ -2,6 +2,7 @@ import sys
 
 from . import public_record
 from . import placeholder_room
+from . import placeholder2
 from . import menu_room
 
 class SpaceBase():
@@ -19,6 +20,7 @@ class SpaceBase():
 		self.room_dict = {
 			"menu": menu_room.MenuRoom,
 			"placeholder": placeholder_room.PlaceholderRoom,
+			"placeholder2": placeholder2.PlaceholderRoom2,
 		}
 
 		self.active_room = self.room_dict["menu"](self, room_name = "menu")

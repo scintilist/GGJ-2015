@@ -1,65 +1,47 @@
 BYE = "Goodbye!"
 
-N1 = "Oh...hey."
-N2 = "That's okay; I wouldn't expect anybody to recognize little ol' me anymore."
+N1 = "Hey there, little man!"
+K1 = "Dennis! My main man! How did you get up here?!"
+K2 = "Oh, great. How did you get into my nation?"
 
-N3 = "You again?"
-N4 = "You said you hated me!"
+N2_HAPPY = "Y'know, I don't really know, myself! I was chillin' in Pyongyang and some guys just pushed me on a rocket."
+N2_SAD = "Aw, I'm sorry, dude. I thought you might've wanted me here. Not like I can go back now, though."
 
-N5 = "Hey there!"
-N6 = "You said you loved me!"
+HELP_1 = "My people are suffering, Dennis. We are alone and confused. We need purpose."
+HELP_2 = "Tiny Kim's on my ass about all the people who came up here. Do something."
 
-K1 = "Who are you?"
-K2 = "James Franco!?! What are you doing on the moon?"
-K3 = "So, Franco - we meet again."
-K4 = "I hate you!"
-K5 = "I love you!"
+class RodmanDialog:
+	def __init__(self, record):
+		self.record = record
 
-K6 = "What did I say?"
+	def rodman_1(self):
+		return (N1, {
+			N1: {
+				K1: (N2_HAPPY, "rodman_spoken_to"),
+				K2: (N2_SAD, "rodman_spoken_to"),
+			},
 
-LOVE_RESP = "Thank you! Aw, you're embarrassing me!"
-HATE_RESP = "Well fuck you too, you Gangnam ass piece of shit!"
+			N2_SAD: {
+				HELP_1: ("", ""),
+				HELP_2: ("", ""),
+			},
+			N2_HAPPY: {
+				HELP_1: ("", ""),
+				HELP_2: ("", ""),
+			},
+		})
 
+	'''def rodman_followup(self):
+		start = N3 if self.record["choices"]["rodman_hate"] else N5
+		response = N4 if self.record["choices"]["rodman_hate"] else N6
 
+		return (start, {
+			start: {
+				K6: (response, ""),
+			},
 
-rodman_1 = (N1, {
-	N1: {
-		K1: (N2, ""),
-		K2: (N2, ""),
-		K3: (N2, ""),
-	},
-
-	N2: {
-		K4: (HATE_RESP, "rodman_hate"),
-		K5: (LOVE_RESP, "rodman_love"),
-	},
-
-	LOVE_RESP: {
-		BYE: ("", ""),
-	},
-
-	HATE_RESP: {
-		BYE: ("", ""),
-	},
-})
-
-rodman_hate_convo = (N3, {
-	N3: {
-		K6: (N4, ""),
-	},
-
-	N4: {
-		BYE: ("", ""),
-	},
-})
-
-rodman_love_convo = (N5, {
-	N5: {
-		K6: (N6, ""),
-	},
-
-	N6: {
-		BYE: ("", ""),
-	},
-})
+			response: {
+				BYE: ("", ""),
+			},
+		})'''
 
