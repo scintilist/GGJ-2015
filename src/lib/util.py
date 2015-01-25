@@ -29,14 +29,19 @@ def center_image(image):
 def get_frame_list(fn_base, frame_count = 0, num_digits = 2, center = False, center_x = False):
 	fn, ext = fn_base.split('.')
 	frame_list = []
-	for i in range(1, frame_count+1):
-		name = '{}{:0{}}.{}'.format(fn, i, num_digits, ext)
-		img = pyglet.resource.image(name)
-		if(center):
-			center_image(img)
-		if(center_x):
-			img.anchor_x = img.width/2
-		frame_list.append(img)
+	i = 0
+	try:
+		while True:
+			name = '{}{:0{}}.{}'.format(fn, i, num_digits, ext)
+			img = pyglet.resource.image(name)
+			if(center):
+				center_image(img)
+			if(center_x):
+				img.anchor_x = img.width/2
+			frame_list.append(img)
+			i += 1
+	except:
+		pass
 	return frame_list
 
 # Geometry

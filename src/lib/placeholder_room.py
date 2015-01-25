@@ -16,7 +16,7 @@ class PlaceholderRoom(Room):
 		
 		# Set player range constraints
 		self.player.x_range = (100, width-100)
-		self.player.y_range = (80, 200)
+		self.player.y_range = (0, 150)
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("PlaceHolderRoomBackground01.png")
@@ -34,11 +34,13 @@ class PlaceholderRoom(Room):
 		super().on_key_press(symbol, modifier)
 		
 	def get_resources(self):
+		pass
 		# Create animation from file
 		
 		self.npc_animation = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
 		
 	def build_objects(self):
+		pass
 		# Create animated room object from animation
 
 		self.add_object(NPC, self.npc_animation, layer_offset = 1, x = 600, y = 50, scale = .4)
