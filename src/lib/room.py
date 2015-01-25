@@ -79,7 +79,6 @@ class Room:
 			self.active_npc.start_conversation()
 				
 	def kim_box_clicked(self, kb_text):
-		print("kb clicked")
 		self.active_npc.box_clicked(kb_text)
 	
 	def update(self, dt):

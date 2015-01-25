@@ -1,7 +1,7 @@
 import sys
 from .game_obj import GameObj
 from . import util
-from .dialog_data import rodman_1, rodman_hate_convo, rodman_love_convo
+from .dialog_rodman import *
 
 class Rodman(GameObj):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
