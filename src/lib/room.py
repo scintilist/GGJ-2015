@@ -63,8 +63,8 @@ class Room:
 	def build_objects(self):
 		pass
 
-	def add_object(self, obj_type, img, layer_offset = 0, x = 0, y = 0, scale = 1):
-		obj = obj_type(img, group = self.layers[self.player_layer+layer_offset], x = x, y = y, scale = scale, room = self)
+	def add_object(self, obj_type, image = None, layer_offset = 0, x = 0, y = 0, scale = 1):
+		obj = obj_type(image = image, group = self.layers[self.player_layer+layer_offset], x = x, y = y, scale = scale, room = self)
 		self.objects.append(obj)
 		return obj
 	
@@ -146,7 +146,7 @@ class Room:
 			try:
 				self.pressed_object.mouse_release(m_x, m_y)
 			except:
-				print('pressed object release could not be called')
+				pass
 			self.pressed_object = None
 		return True # The buck stops here
 		
