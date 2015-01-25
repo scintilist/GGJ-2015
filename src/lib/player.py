@@ -15,14 +15,16 @@ class Player(GameObj):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
 			visible = True, opacity = 255, room = None):
 		# Get object initial image
-		room.kim_idle_right = util.make_animation('KimIdelV2_.png', num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		room.kim_idle_right = util.make_animation('KimIdelV2_.png', num_digits = 5, center_x = True, loop = True, duration = 1/60)
 		room.kim_idle_left = room.kim_idle_right.get_transform(flip_x = True)
-		room.kim_walk_right = util.make_animation('KimWalkV2_.png', num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		room.kim_walk_right = util.make_animation('KimWalkV2_.png', num_digits = 5, center_x = True, loop = True, duration = 1/60)
+		room.kim_walk_right.key_frames = [50] # set key frames that trigger an animation end event
 		room.kim_walk_left = room.kim_walk_right.get_transform(flip_x = True)
+		room.kim_walk_left.key_frames = [50] # set key frames that trigger an animation end event
 		super().__init__(room.kim_idle_right, group, x, y, scale, rotation, visible, opacity, room)
 
 		# Push the animation end event handler to the sprite
-		self.sprite.push_handlers(self.on_animation_end)
+		self.sprite.push_handlers(self.on_animation_end, self.on_key_frame)
 		
 		# Set the image to transition to on animation completion
 		self.next_image = room.kim_idle_right
@@ -30,7 +32,7 @@ class Player(GameObj):
 		self.lr_state = STILL
 		self.ud_state = STILL
 
-		self.speed = 2
+		self.speed = 5
 		self.frozen = False
 		
 	def update(self, dt):
@@ -47,6 +49,10 @@ class Player(GameObj):
 	
 	def on_animation_end(self):
 		self.sprite.image = self.next_image
+		
+	def on_key_frame(self):
+		if self.sprite.image != self.next_image:
+			self.sprite.image = self.next_image
 		
 	def set_image_now(self, new_image):
 		'''Set the image and set frame to 0 if different'''

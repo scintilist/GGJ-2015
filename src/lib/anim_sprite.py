@@ -22,6 +22,13 @@ class Anim_Sprite(pyglet.sprite.Sprite):
 			self.dispatch_event('on_animation_end')
 			if self._vertex_list is None:
 				return # Deleted in event handler.
+				
+		# Allow stopping on pre-defined key frames
+		try:
+			if self._frame_index in self._animation.key_frames:
+				self.dispatch_event('on_key_frame')
+		except:
+			pass
 
 		frame = self._animation.frames[self._frame_index]
 		self._set_texture(frame.image.get_texture())
@@ -71,4 +78,5 @@ class Anim_Sprite(pyglet.sprite.Sprite):
 		if self._paused:
 			self._animate(0)
 			self._paused = False
-		
+
+Anim_Sprite.register_event_type('on_key_frame')
