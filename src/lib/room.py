@@ -77,6 +77,12 @@ class Room:
 		if new_active_npc is not self.active_npc:
 			self.active_npc = new_active_npc
 			self.active_npc.start_conversation()
+			self.player.freeze()
+			
+	def end_dialog(self):
+		self.npc_dialog_box.hide()
+		self.active_npc = None
+		self.player.unfreeze()
 				
 	def kim_box_clicked(self, kb_text):
 		self.active_npc.box_clicked(kb_text)

@@ -31,6 +31,7 @@ class Player(GameObj):
 		self.ud_state = STILL
 
 		self.speed = 2
+		self.frozen = False
 		
 	def update(self, dt):
 		super().update_position(dt)
@@ -53,47 +54,59 @@ class Player(GameObj):
 			self.sprite.image = new_image
 			self.sprite.set_frame(0)
 		self.next_image = new_image
+		
+	def freeze(self):
+		self.frozen = True
+		if self.lr_state == WALK_LEFT:
+			self.next_image = self.room.kim_idle_left
+		elif self.lr_state == WALK_RIGHT:
+			self.next_image = self.room.kim_idle_right
 	
+	def unfreeze(self):
+		self.frozen = False
+		
+	def enter_state(self, state):
+		if self.frozen:
+			self.speed = 0
+		else:
+			if state == WALK_LEFT:
+				self.vx = -self.speed
+				self.set_image_now(self.room.kim_walk_left)
+			elif state == WALK_RIGHT:
+				self.vx = self.speed
+				self.set_image_now(self.room.kim_walk_right)
+			elif state == STILL or state == BOTH_DOWN:
+				self.vx = 0
+				if self.lr_state == WALK_LEFT:
+					self.next_image = self.room.kim_idle_left
+				else:
+					self.next_image = self.room.kim_idle_right
+		self.lr_state = state
+		
 	# Left and right movement
 	def left_press(self):
 		if self.lr_state == STILL:
-			self.lr_state = WALK_LEFT
-			self.set_image_now(self.room.kim_walk_left)
-			self.vx = -self.speed
+			self.enter_state(WALK_LEFT)
 		elif self.lr_state == WALK_RIGHT:
-			self.lr_state = BOTH_DOWN
-			self.next_image = self.room.kim_idle_right
-			self.vx = 0
+			self.enter_state(BOTH_DOWN)
 
 	def right_press(self):
 		if self.lr_state == STILL:
-			self.lr_state = WALK_RIGHT
-			self.set_image_now(self.room.kim_walk_right)
-			self.vx = self.speed
+			self.enter_state(WALK_RIGHT)
 		elif self.lr_state == WALK_LEFT:
-			self.lr_state = BOTH_DOWN
-			self.next_image = self.room.kim_idle_left
-			self.vx = 0
+			self.enter_state(BOTH_DOWN)
 
 	def left_release(self):
 		if self.lr_state == WALK_LEFT:
-			self.lr_state = STILL
-			self.next_image = self.room.kim_idle_left
-			self.vx = 0
+			self.enter_state(STILL)
 		elif self.lr_state == BOTH_DOWN:
-			self.lr_state = WALK_RIGHT
-			self.set_image_now(self.room.kim_walk_right)
-			self.vx = self.speed
+			self.enter_state(WALK_RIGHT)
 
 	def right_release(self):
 		if self.lr_state == WALK_RIGHT:
-			self.lr_state = STILL
-			self.next_image = self.room.kim_idle_right
-			self.vx = 0
+			self.enter_state(STILL)
 		elif self.lr_state == BOTH_DOWN:
-			self.lr_state = WALK_LEFT
-			self.set_image_now(self.room.kim_walk_left)
-			self.vx = -self.speed
+			self.enter_state(WALK_LEFT)
 	
 	# Up and down movement
 	def down_press(self):
