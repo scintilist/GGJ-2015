@@ -11,7 +11,6 @@ N6 = "You said you loved me!"
 
 K1 = "Who are you?"
 K2 = "James Franco!?! What are you doing on the moon?"
-K3 = "So, Franco - we meet again."
 K4 = "I hate you!"
 K5 = "I love you!"
 
@@ -19,6 +18,19 @@ K6 = "What did I say?"
 
 LOVE_RESP = "Thank you! Aw, you're embarrassing me!"
 HATE_RESP = "Well fuck you too, you Gangnam ass piece of shit!"
+
+WHY_MOON = "Why are you on the moon?"
+SETH_DIED = "It's just that...Seth was killed by the meteors. I miss him so much. I had nowhere else to go."
+
+SORRY = "I'm so sorry, sir! I am Kim Jong Un. Who might you be?"
+ITS_OKAY = "That's alright. I'm just kiddin' around. I'm James Franco."
+
+PROPOSE = "Maybe...maybe I could be your new Seth."
+PROPOSE_ACCEPT = "You have a way with words, my short, pudgy, Asian friend. Stop by my cabin later tonight."
+
+SEE_YOU_TONIGHT = "See you tonight, Kim!"
+BUSY = "Sorry, Kim, I'm a little busy right now. See you around?"
+
 
 class FrancoDialog:
 	def __init__(self, record):
@@ -28,34 +40,34 @@ class FrancoDialog:
 		return (N1, {
 			N1: {
 				K1: (N2, "franco_spoken_to"),
-				K2: (N2, "franco_spoken_to"),
-				K3: (N2, "franco_spoken_to"),
+				K2: (SETH_DIED, "franco_spoken_to"),
 			},
 
 			N2: {
-				K4: (HATE_RESP, "franco_hate"),
-				K5: (LOVE_RESP, "franco_love"),
-			},
-
-			LOVE_RESP: {
+				SORRY: (ITS_OKAY, ""),
 				BYE: ("", ""),
 			},
 
-			HATE_RESP: {
+			ITS_OKAY: {
+				WHY_MOON: (SETH_DIED, ""),
+				BYE: ("", ""),
+			},
+
+			SETH_DIED: {
+				PROPOSE: (PROPOSE_ACCEPT, "franco_romance"),
+				BYE: ("", ""),
+			},
+
+			PROPOSE_ACCEPT: {
 				BYE: ("", ""),
 			},
 		})
 
 	def franco_followup(self):
-		start = N3 if self.record["choices"]["franco_hate"] else N5
-		response = N4 if self.record["choices"]["franco_hate"] else N6
+		start = SEE_YOU_TONIGHT if "franco_romance" in self.record["choices"] else BUSY
 
 		return (start, {
 			start: {
-				K6: (response, ""),
-			},
-
-			response: {
 				BYE: ("", ""),
 			},
 		})

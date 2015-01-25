@@ -24,7 +24,7 @@ class Franco(NPC):
 	def start_conversation(self):
 		import sys, traceback
 		try:
-			if "franco_hate" in self.record["choices"] or "franco_love" in self.record["choices"]:
+			if "franco_spoken_to" in self.record["choices"]:
 				self.convo = self.dialog_manager.franco_followup()
 
 			super().start_conversation()
