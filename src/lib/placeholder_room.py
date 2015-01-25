@@ -4,9 +4,10 @@ from pyglet.window import key
 from pyglet.window import mouse
 
 from . import util
-from . import game_obj
+
 from .room import *
 from .public_record import PublicRecord
+from .game_obj import GameObj
 from .base_npc import NPC
 
 class PlaceholderRoom(Room):
@@ -35,7 +36,7 @@ class PlaceholderRoom(Room):
 	def get_resources(self):
 		# Create animation from file
 		
-		self.npc_animation = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		self.npc_animation = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
 		
 	def build_objects(self):
 		# Create animated room object from animation

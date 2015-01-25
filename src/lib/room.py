@@ -4,9 +4,11 @@ from pyglet.window import key
 from pyglet.window import mouse
 
 from . import util
-from .game_obj import *
 from . import roomchangedispatcher
 from .public_record import PublicRecord
+from .game_obj import GameObj
+from .base_npc import NPC
+from .player import Player
 
 STATE_FREEMOVE = 0
 STATE_DIALOG = 1
@@ -34,14 +36,14 @@ class Room:
 			layer = pyglet.graphics.OrderedGroup(i)
 			self.layers.append(layer)
 
-		# Event handlers
+		# Push Event handlers
 		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
 
 		# List of game_obj; everything in the room that isn't bg
 		self.objects = []
 		
 		# Add player here, player is a game object w/ event handlers
-		player_img = util.make_animation('KimWalk_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		player_img = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
 		self.player = self.add_object(Player, player_img, layer_offset = 0, x = 600, y = 50, scale = 1)
 		
 		if "player_pos" in self.record[self.room_name]:
@@ -70,6 +72,8 @@ class Room:
 			obj.update(dt)
 
 	def cleanup(self):
+		# Remove Event handlers
+		self.window.remove_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
 		# Store all necessary state
 		self.record[self.room_name]["player_pos"] = (self.player.x, self.player.y)
 	

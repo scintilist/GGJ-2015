@@ -1,8 +1,8 @@
-from .game_obj import Game_Obj
+from .game_obj import GameObj
 from . import util
 from .public_record import PublicRecord
 
-class NPC(Game_Obj):
+class NPC(GameObj):
 	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, rotation = 0, 
 			visible = True, opacity = 255, record = PublicRecord(), room = None):
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
