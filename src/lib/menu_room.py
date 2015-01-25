@@ -9,7 +9,7 @@ from .room import *
 from .public_record import PublicRecord
 from .game_obj import GameObj
 from .base_npc import NPC
-from .exit_button import ExitButton
+from .button import *
 
 class MenuRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
@@ -18,6 +18,9 @@ class MenuRoom(Room):
 		# Set player range constraints
 		self.player.x_range = (100, width-100)
 		self.player.y_range = (0, 150)
+		
+		# Don't show player on the menu screen
+		self.player.visible = False
 		
 		# Get background from file
 		bg_img = pyglet.resource.image("HubScreenBackGround.png")
@@ -36,14 +39,9 @@ class MenuRoom(Room):
 		
 	def get_resources(self):
 		pass
-		# Create animation from file
-		
-		self.npc_animation = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
-		self.exit_button_img = pyglet.resource.image("HubScreenExitBut_Dark.png")
 		
 	def build_objects(self):
 		pass
-		# Create animated room object from animation
-
-		#self.add_object(NPC, self.npc_animation, layer_offset = 1, x = 600, y = 50, scale = .4)
-		self.add_object(ExitButton, self.exit_button_img, layer_offset = 5, x = 1920-72, y = 1080-72, scale = 1)
+		# Create room objects
+		self.add_object(ExitButton, layer_offset = 5, x = 1920-72, y = 1080-72, scale = 1)
+		self.add_object(PlayButton, layer_offset = 5, x = 1920/2, y = 144, scale = 1)
