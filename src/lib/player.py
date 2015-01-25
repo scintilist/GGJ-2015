@@ -97,10 +97,6 @@ class Player(GameObj):
 	
 	# Up and down movement
 	def down_press(self):
-		self.room.npc_dialog_box.show()
-		for b in self.room.kim_boxes:
-			b.show()
-
 		if self.ud_state == STILL:
 			self.ud_state = WALK_DOWN
 			self.vy = -self.speed
@@ -109,10 +105,6 @@ class Player(GameObj):
 			self.vy = 0
 
 	def up_press(self):
-		self.room.npc_dialog_box.hide()
-		for b in self.room.kim_boxes:
-			b.hide()
-
 		if self.ud_state == STILL:
 			self.ud_state = WALK_UP
 			self.vy = self.speed

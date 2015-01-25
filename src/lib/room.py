@@ -75,21 +75,17 @@ class Room:
 	
 	def set_active_npc(self, new_active_npc):
 		if new_active_npc is not self.active_npc:
+			self.npc_dialog_box.show()
+			for kb in self.kim_boxes:
+				kb.show()
 			pass
 			# Start up a dialog with the NPC here
 	
 	def update(self, dt):
 		# Room updates here
-		
-		
 		for obj in self.objects:
 			obj.room = self
 			obj.update(dt)
-			
-	#def change_room(self, next_room):
-	#	if next_room in rooms:
-	#			self.cleanup()
-	#			active_room = rooms[room_name](abs_width, abs_height, g_scale = global_scale, window = window, record = record)
 
 	def cleanup(self):
 		# Remove Event handlers
