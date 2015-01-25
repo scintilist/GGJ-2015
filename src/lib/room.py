@@ -68,9 +68,6 @@ class Room:
 	def end_dialog(self):
 		self.active_npc = None
 		self.player.unfreeze()
-				
-	def kim_box_clicked(self, kb_text):
-		self.active_npc.box_clicked(kb_text)
 	
 	def update(self, dt):
 		# Room updates here

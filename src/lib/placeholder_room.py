@@ -36,6 +36,4 @@ class PlaceholderRoom(Room):
 		
 	def build_objects(self):
 		# Create room objects
-		# self.add_object(Rodman, layer_offset = 1, x = 1600, y = 50, scale = 1.0)
 		self.add_object(TinyKim, layer_offset = 1, x = 1100, y = 50, scale = .4)
-		# self.add_object(Franco, layer_offset = 1, x = 400, y = 50, scale = 1.0)

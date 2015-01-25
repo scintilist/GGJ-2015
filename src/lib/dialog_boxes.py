@@ -94,8 +94,11 @@ class KimDialog(GameObj):
 	def show(self):
 		self.visible = True
 		self.set_text_string(self.text_string)
-
+		
 	def mouse_click(self, x, y):
-		if not self.visible:
-			return
-		self.room.kim_box_clicked(self.text_string)
+		pass
+
+	def mouse_release(self, x, y):
+
+		if self.room.is_over_object(self, x, y):
+			self.room.active_npc.box_clicked(self.text_string)
