@@ -26,7 +26,6 @@ class NPC(GameObj):
 			i += 1
 			
 	def box_clicked(self, text):
-		# Hide dialog options
 		for kb in self.room.kim_boxes:
 			kb.hide()
 			
@@ -34,7 +33,8 @@ class NPC(GameObj):
 		my_response = my_current[text][0]
 		record_choice = my_current[text][1]
 		
-		if record_choice != "":
+		if record_choice and record_choice != "":
+			print(record_choice)
 			# Put Kim's choice in the public record
 			self.record["choices"][record_choice] = True
 		if my_response == "":

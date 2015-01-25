@@ -1,6 +1,8 @@
 from .base_npc import NPC
 from . import util
-from .dialog_data import tiny_kim_1
+from .dialog_tinykim import *
+
+import sys
 
 class TinyKim(NPC):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
@@ -15,3 +17,12 @@ class TinyKim(NPC):
 		
 		self.convo = tiny_kim_1
 		self.what_im_saying = ""
+
+	def start_conversation(self):
+		if "tinykim_info_done" in self.record["choices"]:
+			self.convo = tiny_kim_nag
+			print("nagging")
+		else:
+			print(self.record["choices"])
+
+		super().start_conversation()

@@ -63,15 +63,3 @@ rodman_love_convo = (N5, {
 	},
 })
 
-tiny_kim_1 = (N2, {
-	N1: {
-		K1: (N2, None),
-		K2: (N2, None),
-		K3: (N2, None),
-	},
-
-	N2: {
-		K4: ("", None),
-	}
-})
-

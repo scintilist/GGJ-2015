@@ -15,7 +15,7 @@ class Rodman(NPC):
 		self.convo = rodman_1
 		self.what_im_saying = ""
 		
-	def start_converstion(self):
+	def start_conversation(self):
 		self.convo = rodman_1
 		if "rodman_hate" in self.record["choices"]:
 			self.convo = rodman_hate_convo
