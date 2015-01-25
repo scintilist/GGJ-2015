@@ -43,8 +43,11 @@ class Room:
 		self.objects = []
 		
 		# Add player here, player is a game object w/ event handlers
-		player_img = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		# player_img = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		player_img = util.make_animation('KimIdelV2_.png', frame_count = 47, num_digits = 5, center_x = True, loop = True, duration = 1/30)
 		self.player = self.add_object(Player, player_img, layer_offset = 0, x = 600, y = 50, scale = 1)
+		self.player.walk_right_anim = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		self.player.walk_left_anim = self.player.walk_right_anim.get_transform(flip_x = True)
 		
 		if "player_pos" in self.record[self.room_name]:
 			pos = self.record[self.room_name]["player_pos"]
@@ -205,4 +208,3 @@ class Room:
 		
 		# Sort by layer key
 		return sorted(mouse_over_objs, key = lambda x: x.sprite.group, reverse = True)
-	
