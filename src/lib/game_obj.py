@@ -4,7 +4,7 @@ from . import util
 
 class GameObj():
 	''' Some game object containing a sprite, draw method, and things to do on update'''
-	def __init__(self, image, group = None, x = 400, y = 300, scale = 1.0, 
+	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, 
 			rotation = 0, visible = True, opacity = 255, record = PublicRecord(), room = None,
 			x_range = (float('-inf'), float('+inf')), y_range = (float('-inf'), float('+inf'))):
 		self.sprite = anim_sprite.Anim_Sprite(image, x*room.g_scale, y*room.g_scale, batch = room.batch, group = group)
