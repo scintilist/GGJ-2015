@@ -41,6 +41,12 @@ class Player(GameObj):
 		# Shrink player with perspective to center point in screen
 		self.scale = 1 - self.y / self.room.height
 		
+		if self.y > 75:
+			layer_offset = 0
+		else:
+			layer_offset = 2
+		self.sprite.group = self.room.layers[self.room.player_layer + layer_offset]
+		
 		self.update_sprite()
 		
 	def mouse_click(self, x, y):

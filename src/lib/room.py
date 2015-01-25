@@ -93,7 +93,8 @@ class Room:
 		elif symbol == key.S:
 				self.player.down_press()
 		elif symbol == key.ESCAPE:
-			pyglet.app.exit()
+			self.space_base.change_room("menu")
+			print('menu room')
 		return True # The buck stops here
 		
 	def on_key_release(self, symbol, modifier):
