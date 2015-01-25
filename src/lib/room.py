@@ -91,12 +91,6 @@ class Room:
 		elif symbol == key.S:
 			if self.state == STATE_FREEMOVE:
 				self.player.down_press()
-
-		elif symbol == key._1:
-			self.room_changer.change_room("maddie")
-
-		elif symbol == key._2:
-			self.room_changer.change_room("rockstar")
 		
 		elif symbol == key.ESCAPE:
 			pyglet.app.exit()
@@ -170,90 +164,3 @@ class Room:
 					pass
 					
 		return True # The buck stops here
-
-		
-		
-		
-		
-		
-		
-		
-		
-#	
-# TEST ROOMS PLEASE IGNORE		
-#		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
-class GameRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, record, room_name = "rockstar", start_x = 300, start_y = 300)
-		
-		# Get background from file
-		bg_img = pyglet.resource.image("rockstarguy.jpg")
-		self.bg_sprite = pyglet.sprite.Sprite(bg_img, x = 0, y = 0, batch = self.batch, group = self.layers[0])
-		self.bg_sprite.scale = self.g_scale
-		
-		self.get_resources()
-		self.build_objects()
-		
-	def get_resources(self):
-		# Create animation from file
-		self.nums_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
-		
-	def build_objects(self):
-		# Create animated room object from animation
-		self.objects.append(Game_Obj(self.nums_animation, group = self.layers[1], 
-			x = self.width/2, y = self.height/2, scale = 2, room = self))
-
-class TestRoom(Room):
-	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, record)
-
-		# Get background from file
-		bg_img = pyglet.resource.image("rockstarguy.jpg")
-		self.bg_sprite = pyglet.sprite.Sprite(bg_img, x = 0, y = 0, batch = self.batch, group = self.layers[0])
-		self.bg_sprite.scale = self.g_scale
-
-		# fg_img = pyglet.resource.image("rockstarguy.jpg")
-		# self.fg_sprite = pyglet.sprite.Sprite(fg_img, x = 0, y = 0, batch = self.batch, group = self.layers[-1])
-		# self.fg_sprite.scale = self.g_scale
-		
-		self.get_resources()
-		self.build_objects()
-		
-	def get_resources(self):
-		# Create animation from file
-		self.nums_animation = util.make_animation('num.png', frame_count = 9, num_digits = 2, center = True, loop = True, duration = .2)
-		
-	def build_objects(self):
-		# Create animated room object from animation
-		self.objects.append(Game_Obj(self.nums_animation, group = self.layers[1], 
-			x = self.width/2, y = self.height/2, scale = 2, room = self))
-
-			
-	

@@ -11,7 +11,7 @@ from .base_npc import NPC
 
 class PlaceholderRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
-		super().__init__(width, height, g_scale, window, record, room_name = "maddie")
+		super().__init__(width, height, g_scale, window, record, room_name = "placeholder")
 		
 		# Set player range constraints
 		self.player.x_range = (100, width-100)
@@ -24,6 +24,13 @@ class PlaceholderRoom(Room):
 		
 		self.get_resources()
 		self.build_objects()
+		
+	def on_key_press(self, symbol, modifier):
+		if symbol == key._1:
+			self.room_changer.change_room("menu")
+			return True
+
+		super().on_key_press(symbol, modifier)
 		
 	def get_resources(self):
 		# Create animation from file
