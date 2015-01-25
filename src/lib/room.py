@@ -52,13 +52,20 @@ class Room:
 	def build_objects(self):
 		pass
 
-	def add_object(self, obj_type, image = None, layer_offset = 0, x = 0, y = 0, scale = 1):
-		obj = obj_type(image = image, group = self.layers[self.player_layer+layer_offset], x = x, y = y, scale = scale, room = self)
+	def add_object(self, obj_type, image = None, layer_offset = 0, x = 0, y = 0, scale = 1, **kwargs):
+		obj = obj_type(image = image, group = self.layers[self.player_layer+layer_offset], x = x, y = y, scale = scale, room = self, **kwargs)
 		self.objects.append(obj)
 		return obj
 	
+	def set_active_npc(self, new_active_npc):
+		if new_active_npc is not self.active_npc:
+			pass
+			# Start up a dialog with the NPC here
+	
 	def update(self, dt):
 		# Room updates here
+		
+		
 		for obj in self.objects:
 			obj.room = self
 			obj.update(dt)

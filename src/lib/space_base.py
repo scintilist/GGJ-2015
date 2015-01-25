@@ -1,3 +1,5 @@
+import sys
+
 from . import public_record
 from . import placeholder_room
 from . import menu_room
@@ -28,7 +30,10 @@ class SpaceBase():
 		self.active_room.update(dt)
 		
 	def change_room(self, next_room_name):
-		if next_room_name in self.room_dict:
-			self.active_room.cleanup()
-			self.active_room = self.room_dict[next_room_name](self, room_name = next_room_name)
+		try:
+			if next_room_name in self.room_dict:
+				self.active_room.cleanup()
+				self.active_room = self.room_dict[next_room_name](self, room_name = next_room_name)
+		except:
+			print(sys.exc_info())
 	
