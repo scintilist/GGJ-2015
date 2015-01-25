@@ -1,5 +1,6 @@
 from .game_obj import GameObj
 from . import util
+from .dialog_boxes import *
 
 class NPC(GameObj):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
@@ -8,26 +9,46 @@ class NPC(GameObj):
 		
 		self.convo = None
 		self.what_im_saying = ""
+		
+		self.kb = []
+		self.npc_dialog_box = None
 			
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
 	def mouse_click(self, x, y):
 		self.room.set_active_npc(self)
-
-	def start_conversation(self):
-		self.room.npc_dialog_box.show()
-		self.room.npc_dialog_box.set_text_string(self.convo[0])
-		self.what_im_saying = self.convo[0]
 		
+	def draw_dialog(self):
+		self.clear_dialog()
+		# Add an NPC dialog box and three Kim dialog boxes
+		self.npc_dialog_box = self.room.add_object(NPCDialog, layer_offset = 2, x = self.room.width/2, y = self.room.height/2 + 270/2,
+			scale = 1.0, text_string = self.what_im_saying)
 		i = 0
 		for msg in self.convo[1][self.what_im_saying]:
-			kb = self.room.kim_boxes[i]
-			kb.show()
-			kb.set_text_string(msg)
+			new_kb = self.room.add_object(KimDialog, layer_offset = 2, x = self.room.width/2, y = self.npc_dialog_box.y - 90*(len(self.kb)+1),
+				scale = 1.0, text_string = msg)
+			self.kb.append(new_kb)	
 			i += 1
+		print ('drawing all')
+			
+	def clear_dialog(self):
+		try:
+			self.room.objects.remove(self.npc_dialog_box)
+		except:
+			pass
+		self.npc_dialog_box = None
+		
+		for i, box in enumerate(self.kb):
+			try:
+				self.room.objects.remove(box)
+			except:
+				pass
+		self.kb = []
+
+	def start_conversation(self):
+		self.what_im_saying = self.convo[0]
+		self.draw_dialog()
 			
 	def box_clicked(self, text):
-		for kb in self.room.kim_boxes:
-			kb.hide()
 			
 		my_current = self.convo[1][self.what_im_saying]
 		my_response = my_current[text][0]
@@ -38,14 +59,8 @@ class NPC(GameObj):
 			# Put Kim's choice in the public record
 			self.record["choices"][record_choice] = True
 		if my_response == "":
+			self.clear_dialog()
 			self.room.end_dialog()
 		else:
-			i = 0
-			for msg in self.convo[1][my_response]:
-				kb = self.room.kim_boxes[i]
-				kb.show()
-				kb.set_text_string(msg)
-				i += 1
-			
 			self.what_im_saying = my_response
-			self.room.npc_dialog_box.set_text_string(my_response)
+			self.draw_dialog()

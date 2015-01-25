@@ -41,16 +41,16 @@ class Room:
 
 
 		# Add an NPC dialog box and three Kim dialog boxes
-		self.npc_dialog_box = self.add_object(NPCDialog, layer_offset = 2, x = (1920/2 - 640/2), y = (1080/2 + 270/2), scale = 1.0)
-		self.npc_dialog_box.hide()
+		#self.npc_dialog_box = self.add_object(NPCDialog, layer_offset = 2, x = self.width/2, y = self.height/2 + 270/2, scale = 1.0)
+		#self.npc_dialog_box.hide()
 
 		# Add some Kim dialog boxes
-		self.kim_box_0 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*1, scale = 1.0)
-		self.kim_box_1 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*2, scale = 1.0)
-		self.kim_box_2 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*3, scale = 1.0)
-		self.kim_boxes = [self.kim_box_0, self.kim_box_1, self.kim_box_2]
-		for kb in self.kim_boxes:
-			kb.hide()
+		#self.kim_box_0 = self.add_object(KimDialog, layer_offset = 2, x = self.width/2, y = self.npc_dialog_box.y - 90*1, scale = 1.0)
+		#self.kim_box_1 = self.add_object(KimDialog, layer_offset = 2, x = self.width/2, y = self.npc_dialog_box.y - 90*2, scale = 1.0)
+		#self.kim_box_2 = self.add_object(KimDialog, layer_offset = 2, x = self.width/2, y = self.npc_dialog_box.y - 90*3, scale = 1.0)
+		#self.kim_boxes = [self.kim_box_0, self.kim_box_1, self.kim_box_2]
+		#for kb in self.kim_boxes:
+		#	kb.hide()
 		
 		if "player_pos" in self.record[self.room_name]:
 			pos = self.record[self.room_name]["player_pos"]
@@ -70,12 +70,15 @@ class Room:
 	
 	def set_active_npc(self, new_active_npc):
 		if new_active_npc is not self.active_npc:
+			try:
+				self.active_npc.clear_dialog()
+			except:
+				pass
 			self.active_npc = new_active_npc
 			self.active_npc.start_conversation()
 			self.player.freeze()
 			
 	def end_dialog(self):
-		self.npc_dialog_box.hide()
 		self.active_npc = None
 		self.player.unfreeze()
 				
