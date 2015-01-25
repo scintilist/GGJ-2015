@@ -209,4 +209,6 @@ class Room:
 					mouse_over_objs.append(obj)
 		
 		# Sort by layer key
-		return sorted(mouse_over_objs, key = lambda x: x.sprite.group, reverse = True)
+		s1 = sorted(mouse_over_objs, key = lambda x: x.sprite.group, reverse = True)
+		return sorted(s1, key = lambda x: x.visible, reverse = True)
+		
