@@ -54,9 +54,12 @@ class KimDialog(GameObj):
 	def __init__(self, image = None, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
 			visible = True, opacity = 255, room = None, text_string = ''):
 		# Get the image here	
-		image = pyglet.resource.image("KimSpeechBubbleGreen.png")
-		image.anchor_x = image.width/2
-		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
+		self.unpressed_image = pyglet.resource.image("KimSpeechBubbleGreen.png")
+		self.unpressed_image.anchor_x = self.unpressed_image.width/2
+		self.pressed_image = pyglet.resource.image("KimSpeechBubbleGreen_Dark.png")
+		self.pressed_image.anchor_x = self.pressed_image.width/2
+		
+		super().__init__(self.unpressed_image, group, x, y, scale, rotation, visible, opacity, room)
 
 		self.label = None
 
@@ -96,9 +99,9 @@ class KimDialog(GameObj):
 		self.set_text_string(self.text_string)
 		
 	def mouse_click(self, x, y):
-		pass
+		self.sprite.image = self.pressed_image
 
 	def mouse_release(self, x, y):
-
+		self.sprite.image = self.unpressed_image
 		if self.room.is_over_object(self, x, y):
 			self.room.active_npc.box_clicked(self.text_string)
