@@ -37,7 +37,7 @@ class Room:
 			self.layers.append(layer)
 
 		# Push Event handlers
-		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
+		self.window.push_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press, self.on_mouse_release)
 
 		# List of game_obj; everything in the room that isn't bg
 		self.objects = []
@@ -123,48 +123,86 @@ class Room:
 	# Mouse
 	def on_mouse_press(self, x, y, button, modifiers):
 		if button == mouse.LEFT:
-			# Get a list of objects mouse is over
-
-			# Unscaled mouse cords
-			m_x = x / self.g_scale
-			m_y = y / self.g_scale
-			
-			mouse_over_objs = []
-			
-			for obj  in self.objects:
-				try: # Try image directly
-					img = obj.sprite.image
-					
-					left = obj.x - img.anchor_x * obj.scale
-					bottom = obj.y - img.anchor_y * obj.scale
-					
-					right = left + img.width * obj.scale
-					top = bottom + img.height * obj.scale
-				except: # Assume animation
-					img = obj.sprite._animation.frames[obj.sprite._frame_index].image
-					
-					left = obj.x - img.anchor_x * obj.scale
-					bottom = obj.y - img.anchor_y * obj.scale
-					
-					right = left + img.width * obj.scale
-					top = bottom + img.height * obj.scale
-				
-				if not (m_x < left or m_x > right or m_y < bottom or m_y > top):
-					x = (m_x - left) / obj.scale
-					y = (m_y - bottom) / obj.scale
-					alpha_val = util.get_pixel_alpha(img, int(x), int(y))
-					if alpha_val > 0:
-						mouse_over_objs.append(obj)
-			
-			# Sort by layer key
-			mouse_over_objs.sort(key = lambda x: x.sprite.group, reverse = True)
-			
-			# Try to call in layer order, then return True
-			for obj in mouse_over_objs:
+			# Unscale mouse cords
+			m_x, m_y = x / self.g_scale, y / self.g_scale
+			objs = self.objects_at_location(m_x, m_y)
+			# Try to call in layer order, then return True when handled
+			for obj in objs:
 				try:
 					obj.mouse_click(m_x, m_y)
+					self.pressed_object = obj
 					return True
 				except:
 					pass
-					
 		return True # The buck stops here
+		
+	def on_mouse_release(self, x, y, button, modifiers):
+		if button == mouse.LEFT:
+			# Unscale mouse cords
+			m_x, m_y = x / self.g_scale, y / self.g_scale
+			try:
+				self.pressed_object.mouse_release(m_x, m_y)
+			except:
+				print('pressed object release could not be called')
+			self.pressed_object = None
+		return True # The buck stops here
+		
+	def is_over_object(self, obj, x, y): # Takes unscaled coordinates
+		try: # Try image directly
+			img = obj.sprite.image
+			
+			left = obj.x - img.anchor_x * obj.scale
+			bottom = obj.y - img.anchor_y * obj.scale
+			
+			right = left + img.width * obj.scale
+			top = bottom + img.height * obj.scale
+		except: # Assume animation
+			img = obj.sprite._animation.frames[obj.sprite._frame_index].image
+			
+			left = obj.x - img.anchor_x * obj.scale
+			bottom = obj.y - img.anchor_y * obj.scale
+			
+			right = left + img.width * obj.scale
+			top = bottom + img.height * obj.scale
+		
+		if not (x < left or x > right or y < bottom or y > top):
+			s_x = (x - left) / obj.scale
+			s_y = (y - bottom) / obj.scale
+			alpha_val = util.get_pixel_alpha(img, int(s_x), int(s_y))
+			if alpha_val > 0:
+				return True
+		return False
+		
+	def objects_at_location(self, x, y):
+		'''return sorted list of objects at the real mouse x y location'''
+		# Get a list of objects mouse is over
+		mouse_over_objs = []
+		
+		for obj  in self.objects:
+			try: # Try image directly
+				img = obj.sprite.image
+				
+				left = obj.x - img.anchor_x * obj.scale
+				bottom = obj.y - img.anchor_y * obj.scale
+				
+				right = left + img.width * obj.scale
+				top = bottom + img.height * obj.scale
+			except: # Assume animation
+				img = obj.sprite._animation.frames[obj.sprite._frame_index].image
+				
+				left = obj.x - img.anchor_x * obj.scale
+				bottom = obj.y - img.anchor_y * obj.scale
+				
+				right = left + img.width * obj.scale
+				top = bottom + img.height * obj.scale
+			
+			if not (x < left or x > right or y < bottom or y > top):
+				s_x = (x - left) / obj.scale
+				s_y = (y - bottom) / obj.scale
+				alpha_val = util.get_pixel_alpha(img, int(s_x), int(s_y))
+				if alpha_val > 0:
+					mouse_over_objs.append(obj)
+		
+		# Sort by layer key
+		return sorted(mouse_over_objs, key = lambda x: x.sprite.group, reverse = True)
+	

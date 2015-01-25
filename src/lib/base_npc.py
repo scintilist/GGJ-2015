@@ -7,6 +7,7 @@ class NPC(GameObj):
 			visible = True, opacity = 255, record = PublicRecord(), room = None):
 		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
 	
+	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
 	def mouse_click(self, x, y):
 		print("npc mouse click was called")
 		if self.room is None:

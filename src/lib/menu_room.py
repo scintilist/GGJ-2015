@@ -39,11 +39,11 @@ class MenuRoom(Room):
 		# Create animation from file
 		
 		self.npc_animation = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
-		self.exit_button_img = pyglet.resource.image("HubScreenExitBut.png")
+		self.exit_button_img = pyglet.resource.image("HubScreenExitBut_Dark.png")
 		
 	def build_objects(self):
 		pass
 		# Create animated room object from animation
 
 		#self.add_object(NPC, self.npc_animation, layer_offset = 1, x = 600, y = 50, scale = .4)
-		self.add_object(ExitButton, self.exit_button_img, layer_offset = 1, x = 1920-72, y = 1080-72, scale = 1)
+		self.add_object(ExitButton, self.exit_button_img, layer_offset = 5, x = 1920-72, y = 1080-72, scale = 1)
