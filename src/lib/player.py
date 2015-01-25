@@ -91,6 +91,8 @@ class Player(GameObj):
 		idle = self.idle_left_anim if left else self.idle_right_anim
 		walk = self.walk_left_anim if left else self.walk_right_anim
 
+		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
+
 		if self.ud_state == STILL:
 			self.ud_state = WALK_DOWN
 			self.vy = -self.speed
@@ -98,7 +100,7 @@ class Player(GameObj):
 		elif self.ud_state == WALK_UP:
 			self.ud_state = BOTH_DOWN
 			self.vy = 0
-			self.sprite.image = idle
+			self.sprite.image = walk if walking else idle
 
 	def up_press(self):
 		left = False
@@ -110,6 +112,8 @@ class Player(GameObj):
 		idle = self.idle_left_anim if left else self.idle_right_anim
 		walk = self.walk_left_anim if left else self.walk_right_anim
 
+		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
+
 		if self.ud_state == STILL:
 			self.ud_state = WALK_UP
 			self.vy = self.speed
@@ -117,7 +121,7 @@ class Player(GameObj):
 		elif self.ud_state == WALK_DOWN:
 			self.ud_state = BOTH_DOWN
 			self.vy = 0
-			self.sprite.image = idle
+			self.sprite.image = walk if walking else idle
 
 	def down_release(self):
 		left = False
@@ -129,10 +133,12 @@ class Player(GameObj):
 		idle = self.idle_left_anim if left else self.idle_right_anim
 		walk = self.walk_left_anim if left else self.walk_right_anim
 
+		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
+
 		if self.ud_state == WALK_DOWN:
 			self.ud_state = STILL
 			self.vy = 0
-			self.sprite.image = idle
+			self.sprite.image = walk if walking else idle
 		elif self.ud_state == BOTH_DOWN:
 			self.ud_state = WALK_UP
 			self.vy = self.speed
@@ -148,10 +154,12 @@ class Player(GameObj):
 		idle = self.idle_left_anim if left else self.idle_right_anim
 		walk = self.walk_left_anim if left else self.walk_right_anim
 
+		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
+
 		if self.ud_state == WALK_UP:
 			self.ud_state = STILL
 			self.vy = 0
-			self.sprite.image = idle
+			self.sprite.image = walk if walking else idle
 		elif self.ud_state == BOTH_DOWN:
 			self.ud_state = WALK_DOWN
 			self.vy = -self.speed
