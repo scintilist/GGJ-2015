@@ -9,6 +9,7 @@ from .room import *
 from .public_record import PublicRecord
 from .game_obj import GameObj
 from .base_npc import NPC
+from .exit_button import ExitButton
 
 class MenuRoom(Room):
 	def __init__(self, width, height, g_scale = 1.0, window = None, record = PublicRecord()):
@@ -38,9 +39,11 @@ class MenuRoom(Room):
 		# Create animation from file
 		
 		self.npc_animation = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		self.exit_button_img = pyglet.resource.image("HubScreenExitBut.png")
 		
 	def build_objects(self):
 		pass
 		# Create animated room object from animation
 
 		#self.add_object(NPC, self.npc_animation, layer_offset = 1, x = 600, y = 50, scale = .4)
+		self.add_object(ExitButton, self.exit_button_img, layer_offset = 1, x = 1920-72, y = 1080-72, scale = 1)
