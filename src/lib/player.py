@@ -57,6 +57,7 @@ class Player(GameObj):
 		
 	def freeze(self):
 		self.frozen = True
+		self.vx = 0
 		if self.lr_state == WALK_LEFT:
 			self.next_image = self.room.kim_idle_left
 		elif self.lr_state == WALK_RIGHT:
@@ -64,11 +65,10 @@ class Player(GameObj):
 	
 	def unfreeze(self):
 		self.frozen = False
+		self.enter_state(self.lr_state)
 		
 	def enter_state(self, state):
-		if self.frozen:
-			self.speed = 0
-		else:
+		if not self.frozen:
 			if state == WALK_LEFT:
 				self.vx = -self.speed
 				self.set_image_now(self.room.kim_walk_left)
@@ -79,7 +79,7 @@ class Player(GameObj):
 				self.vx = 0
 				if self.lr_state == WALK_LEFT:
 					self.next_image = self.room.kim_idle_left
-				else:
+				elif self.lr_state == WALK_RIGHT:
 					self.next_image = self.room.kim_idle_right
 		self.lr_state = state
 		

@@ -104,43 +104,26 @@ class Room:
 	# Keyboard
 	def on_key_press(self, symbol, modifier):
 		if symbol == key.A:
-			if self.state == STATE_FREEMOVE:
 				self.player.left_press()
-		
 		elif symbol == key.D:
-			if self.state == STATE_FREEMOVE:
-				self.player.right_press()
-				
+				self.player.right_press()			
 		elif symbol == key.W:
-			if self.state == STATE_FREEMOVE:
 				self.player.up_press()
-				
 		elif symbol == key.S:
-			if self.state == STATE_FREEMOVE:
 				self.player.down_press()
-		
 		elif symbol == key.ESCAPE:
 			pyglet.app.exit()
-			
 		return True # The buck stops here
 		
 	def on_key_release(self, symbol, modifier):
 		if symbol == key.A:
-			if self.state == STATE_FREEMOVE:
 				self.player.left_release()
-		
 		elif symbol == key.D:
-			if self.state == STATE_FREEMOVE:
-				self.player.right_release()
-				
+				self.player.right_release()		
 		elif symbol == key.W:
-			if self.state == STATE_FREEMOVE:
 				self.player.up_release()
-				
 		elif symbol == key.S:
-			if self.state == STATE_FREEMOVE:
 				self.player.down_release()
-				
 		return True # The buck stops here
 		
 	# Mouse
