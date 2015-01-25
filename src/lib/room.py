@@ -50,9 +50,9 @@ class Room:
 		self.npc_dialog_box.hide()
 
 		# Add some Kim dialog boxes
-		self.kim_box_0 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*1, scale = 1.0, number = 0)
-		self.kim_box_1 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*2, scale = 1.0, number = 1)
-		self.kim_box_2 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*3, scale = 1.0, number = 2)
+		self.kim_box_0 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*1, scale = 1.0)
+		self.kim_box_1 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*2, scale = 1.0)
+		self.kim_box_2 = self.add_object(KimDialog, layer_offset = 2, x = (1920/2 - 640/2), y = self.npc_dialog_box.y - 90*3, scale = 1.0)
 		self.kim_boxes = [self.kim_box_0, self.kim_box_1, self.kim_box_2]
 		for kb in self.kim_boxes:
 			kb.hide()
@@ -75,11 +75,12 @@ class Room:
 	
 	def set_active_npc(self, new_active_npc):
 		if new_active_npc is not self.active_npc:
-			self.npc_dialog_box.show()
-			for kb in self.kim_boxes:
-				kb.show()
-			pass
-			# Start up a dialog with the NPC here
+			self.active_npc = new_active_npc
+			self.active_npc.start_conversation()
+				
+	def kim_box_clicked(self, kb_text):
+		print("kb clicked")
+		self.active_npc.box_clicked(kb_text)
 	
 	def update(self, dt):
 		# Room updates here
