@@ -1,11 +1,14 @@
 from .game_obj import GameObj
 from . import util
-from .public_record import PublicRecord
 
 class NPC(GameObj):
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
-			visible = True, opacity = 255, record = PublicRecord(), room = None):
-		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
+			visible = True, opacity = 255, room = None):
+		# Get object initial image
+		room.tiny_kim = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		image = room.tiny_kim
+		
+		super().__init__(image, group, x, y, scale, rotation, visible, opacity, room)
 	
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
 	def mouse_click(self, x, y):

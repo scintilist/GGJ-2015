@@ -4,25 +4,21 @@ from pyglet.window import key
 from pyglet.window import mouse
 
 from . import util
-from . import roomchangedispatcher
-from .public_record import PublicRecord
-from .game_obj import GameObj
-from .base_npc import NPC
 from .player import Player
 
 STATE_FREEMOVE = 0
 STATE_DIALOG = 1
 
 class Room:
-	def __init__(self, width = 1920, height = 1080, g_scale = 1.0, window = None, record = PublicRecord(), room_name = "default_room", start_x = 50, start_y = 50):
-		self.g_scale = g_scale
-		self.width = width
-		self.height = height
-		self.window = window
-		self.record = record
+	def __init__(self, space_base = None, room_name = 'default_room', start_x = 50, start_y = 50):
+		self.space_base = space_base
+		
+		self.g_scale = space_base.g_scale
+		self.width = space_base.abs_width
+		self.height = space_base.abs_height
+		self.window = space_base.window
+		self.record = space_base.record
 		self.room_name = room_name
-
-		self.room_changer = roomchangedispatcher.RoomChangeDispatcher()
 		
 		self.state = STATE_FREEMOVE
 
@@ -43,11 +39,7 @@ class Room:
 		self.objects = []
 		
 		# Add player here, player is a game object w/ event handlers
-		# player_img = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
-		player_img = util.make_animation('KimIdelV2_.png', frame_count = 47, num_digits = 5, center_x = True, loop = True, duration = 1/30)
-		self.player = self.add_object(Player, player_img, layer_offset = 0, x = 600, y = 50, scale = 1)
-		self.player.walk_right_anim = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
-		self.player.walk_left_anim = self.player.walk_right_anim.get_transform(flip_x = True)
+		self.player = self.add_object(Player, layer_offset = 0, x = 600, y = 50, scale = 1)
 		
 		if "player_pos" in self.record[self.room_name]:
 			pos = self.record[self.room_name]["player_pos"]
@@ -56,9 +48,6 @@ class Room:
 		else:
 			self.player.x = start_x
 			self.player.y = start_y
-
-	def get_resources(self):
-		pass
 		
 	def build_objects(self):
 		pass
@@ -73,6 +62,11 @@ class Room:
 		for obj in self.objects:
 			obj.room = self
 			obj.update(dt)
+			
+	#def change_room(self, next_room):
+	#	if next_room in rooms:
+	#			self.cleanup()
+	#			active_room = rooms[room_name](abs_width, abs_height, g_scale = global_scale, window = window, record = record)
 
 	def cleanup(self):
 		# Remove Event handlers

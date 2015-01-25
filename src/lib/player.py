@@ -1,6 +1,7 @@
+from . import anim_sprite
+
 from .game_obj import GameObj
 from . import util
-from .public_record import PublicRecord
 
 STILL = 1
 BOTH_DOWN = 2
@@ -12,15 +13,19 @@ WALK_DOWN = 6
 class Player(GameObj):
 	''' Player character'''
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, rotation = 0, 
-			visible = True, opacity = 255, record = PublicRecord(), room = None):
-		super().__init__(image, group, x, y, scale, rotation, visible, opacity, record, room)
+			visible = True, opacity = 255, room = None):
+		# Get object initial image
+		room.kim_idle_right = util.make_animation('KimIdelV2_.png', frame_count = 47, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		room.kim_idle_left = room.kim_idle_right.get_transform(flip_x = True)
+		room.kim_walk_right = util.make_animation('KimWalkV2_.png', frame_count = 90, num_digits = 5, center_x = True, loop = True, duration = 1/30)
+		room.kim_walk_left = room.kim_walk_right.get_transform(flip_x = True)
+		super().__init__(room.kim_idle_right, group, x, y, scale, rotation, visible, opacity, room)
 
-		self.idle_right_anim = image
-		self.idle_left_anim = image.get_transform(flip_x = True)
-
-		# Create & init idle anims for room to load
-		self.walk_left_anim = self.idle_left_anim
-		self.walk_right_anim = self.idle_right_anim
+		# Push the animation end event handler to the sprite
+		self.sprite.push_handlers(self.on_animation_end)
+		
+		# Set the image to transition to on animation completion
+		self.next_image = room.kim_idle_right
 		
 		self.lr_state = STILL
 		self.ud_state = STILL
@@ -39,128 +44,87 @@ class Player(GameObj):
 		# Do somthing real when you click on the player
 		print('player clicked on')
 	
+	def on_animation_end(self):
+		if self.sprite.image is not self.next_image:
+			self.sprite.image = self.next_image
+		
+	def set_image_now(self, new_image):
+		'''Set the image and set frame to 0 if different'''
+		if self.sprite.image is not new_image:
+			self.sprite.image = new_image
+			self.sprite.set_frame(0)
+			self.next_image = new_image
+	
 	# Left and right movement
 	def left_press(self):
 		if self.lr_state == STILL:
 			self.lr_state = WALK_LEFT
-			self.sprite.image = self.walk_left_anim
+			self.set_image_now(self.room.kim_walk_left)
 			self.vx = -self.speed
 		elif self.lr_state == WALK_RIGHT:
 			self.lr_state = BOTH_DOWN
-			self.sprite.image = self.idle_left_anim
+			self.next_image = self.room.kim_idle_right
 			self.vx = 0
 
 	def right_press(self):
 		if self.lr_state == STILL:
-			self.sprite.image = self.walk_right_anim
 			self.lr_state = WALK_RIGHT
+			self.set_image_now(self.room.kim_walk_right)
 			self.vx = self.speed
 		elif self.lr_state == WALK_LEFT:
 			self.lr_state = BOTH_DOWN
-			self.sprite.image = self.idle_right_anim
+			self.next_image = self.room.kim_idle_left
 			self.vx = 0
 
 	def left_release(self):
 		if self.lr_state == WALK_LEFT:
 			self.lr_state = STILL
-			self.sprite.image = self.idle_left_anim
+			self.next_image = self.room.kim_idle_left
 			self.vx = 0
 		elif self.lr_state == BOTH_DOWN:
 			self.lr_state = WALK_RIGHT
-			self.sprite.anim = self.walk_right_anim
+			self.set_image_now(self.room.kim_walk_right)
 			self.vx = self.speed
 
 	def right_release(self):
 		if self.lr_state == WALK_RIGHT:
 			self.lr_state = STILL
-			self.sprite.image = self.idle_right_anim
+			self.next_image = self.room.kim_idle_right
 			self.vx = 0
 		elif self.lr_state == BOTH_DOWN:
 			self.lr_state = WALK_LEFT
-			self.sprite.image = self.walk_left_anim
+			self.set_image_now(self.room.kim_walk_left)
 			self.vx = -self.speed
 	
 	# Up and down movement
 	def down_press(self):
-		left = False
-		if self.lr_state == WALK_LEFT or self.sprite.image == self.idle_left_anim:
-			left = True
-		elif self.lr_state == WALK_RIGHT or self.sprite.image == self.idle_right_anim:
-			left = False
-
-		idle = self.idle_left_anim if left else self.idle_right_anim
-		walk = self.walk_left_anim if left else self.walk_right_anim
-
-		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
-
 		if self.ud_state == STILL:
 			self.ud_state = WALK_DOWN
 			self.vy = -self.speed
-			self.sprite.image = walk
 		elif self.ud_state == WALK_UP:
 			self.ud_state = BOTH_DOWN
 			self.vy = 0
-			self.sprite.image = walk if walking else idle
 
 	def up_press(self):
-		left = False
-		if self.lr_state == WALK_LEFT or self.sprite.image == self.idle_left_anim:
-			left = True
-		elif self.lr_state == WALK_RIGHT or self.sprite.image == self.idle_right_anim:
-			left = False
-
-		idle = self.idle_left_anim if left else self.idle_right_anim
-		walk = self.walk_left_anim if left else self.walk_right_anim
-
-		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
-
 		if self.ud_state == STILL:
 			self.ud_state = WALK_UP
 			self.vy = self.speed
-			self.sprite.image = walk
 		elif self.ud_state == WALK_DOWN:
 			self.ud_state = BOTH_DOWN
 			self.vy = 0
-			self.sprite.image = walk if walking else idle
 
 	def down_release(self):
-		left = False
-		if self.lr_state == WALK_LEFT or self.sprite.image == self.idle_left_anim:
-			left = True
-		elif self.lr_state == WALK_RIGHT or self.sprite.image == self.idle_right_anim:
-			left = False
-
-		idle = self.idle_left_anim if left else self.idle_right_anim
-		walk = self.walk_left_anim if left else self.walk_right_anim
-
-		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
-
 		if self.ud_state == WALK_DOWN:
 			self.ud_state = STILL
 			self.vy = 0
-			self.sprite.image = walk if walking else idle
 		elif self.ud_state == BOTH_DOWN:
 			self.ud_state = WALK_UP
 			self.vy = self.speed
-			self.sprite.image = walk
 
 	def up_release(self):
-		left = False
-		if self.lr_state == WALK_LEFT or self.sprite.image == self.idle_left_anim:
-			left = True
-		elif self.lr_state == WALK_RIGHT or self.sprite.image == self.idle_right_anim:
-			left = False
-
-		idle = self.idle_left_anim if left else self.idle_right_anim
-		walk = self.walk_left_anim if left else self.walk_right_anim
-
-		walking = (self.lr_state == WALK_LEFT or self.lr_state == WALK_RIGHT)
-
 		if self.ud_state == WALK_UP:
 			self.ud_state = STILL
 			self.vy = 0
-			self.sprite.image = walk if walking else idle
 		elif self.ud_state == BOTH_DOWN:
 			self.ud_state = WALK_DOWN
 			self.vy = -self.speed
-			self.sprite.image = walk

@@ -1,9 +1,5 @@
 import pyglet
 from pyglet.gl import *
-from pyglet import clock
-from pyglet import event
-from pyglet import graphics
-from pyglet import image
 from pyglet.sprite import SpriteGroup
 
 class Anim_Sprite(pyglet.sprite.Sprite):

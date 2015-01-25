@@ -1,11 +1,10 @@
 from . import anim_sprite
-from .public_record import PublicRecord
 from . import util
 
 class GameObj():
 	''' Some game object containing a sprite, draw method, and things to do on update'''
 	def __init__(self, image, group = None, x = 0, y = 0, scale = 1.0, 
-			rotation = 0, visible = True, opacity = 255, record = PublicRecord(), room = None,
+			rotation = 0, visible = True, opacity = 255, room = None,
 			x_range = (float('-inf'), float('+inf')), y_range = (float('-inf'), float('+inf'))):
 		self.sprite = anim_sprite.Anim_Sprite(image, x*room.g_scale, y*room.g_scale, batch = room.batch, group = group)
 		
@@ -20,7 +19,7 @@ class GameObj():
 		self.opacity = opacity # 0 -255
 		self.visible = visible # True or False
 
-		self.record = record
+		self.record = room.record
 		
 		self.update_sprite() # save game object values to the sprite
 		
