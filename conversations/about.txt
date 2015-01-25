@@ -1,0 +1,14 @@
+Notes:
+
+All conversations will start with the NPC saying something.
+Kim Jong-un will have dialogue options to choose from in response.
+
+I think that there will always be exactly three dialogue options to choose from
+
+Following each line of dialogue from the NPC is a bracketed number. This number represents the progression of the conversation. When parsing, the number at the end of the NPCs line of dialogue should be matched to the number preceeding the lines of dialogue from Kim.
+
+All matches to the number from Kim are displayed as the options. When Kim selects his option, the process continues, displaying the response from the NPC which matches the number after Kim's choice.
+
+Feel free to refactor this approach to make it more viable.
+
+~Matt
