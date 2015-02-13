@@ -33,5 +33,5 @@ class MenuRoom(Room):
 	def build_objects(self):
 		pass
 		# Create room objects
-		self.add_object(ExitButton, layer_offset = 5, x = 1920-72, y = 1080-72, scale = 1)
+		self.add_object(ExitButton, layer_offset = 5, x = 1920-73, y = 1080-72, scale = 1)
 		self.add_object(PlayButton, layer_offset = 5, x = 1920/2, y = 144, scale = 1)

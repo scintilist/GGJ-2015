@@ -12,7 +12,7 @@ class ExitButton(GameObj):
 		self.visible = False
 		
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
-	def mouse_click(self, x, y):
+	def mouse_press(self, x, y):
 		self.visible = True
 
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
@@ -32,7 +32,7 @@ class PlayButton(GameObj):
 		self.visible = False
 		
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
-	def mouse_click(self, x, y):
+	def mouse_press(self, x, y):
 		self.visible = True
 
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET

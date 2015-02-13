@@ -14,7 +14,7 @@ class NPC(GameObj):
 		self.npc_dialog_box = None
 			
 	# EXCEPTIONS CAUGHT SILENTLY HERE BY PYGLET
-	def mouse_click(self, x, y):
+	def mouse_press(self, x, y):
 		self.room.set_active_npc(self)
 		
 	def draw_dialog(self):

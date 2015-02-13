@@ -49,7 +49,7 @@ class Player(GameObj):
 		
 		self.update_sprite()
 		
-	def mouse_click(self, x, y):
+	def mouse_press(self, x, y):
 		# Do somthing real when you click on the player
 		print('player clicked on')
 	

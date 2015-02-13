@@ -1,18 +1,49 @@
--need art for:
-	-big text box
-	-little text box
+-use gc.get_objects() to find which objects are remaining
+-find out how to parse and print this output
+
+-store the list of objects between calls and interset to find differences
+
+-find all references to an object 
+-fix program to correctly clean up these references
+
+-currently ~6000 additional objects are added for each room switch
+
+
+-make buttons so they have an up image, a down image, and an function on press
+	-function to call on press can be put into the constructor to allow unique button creation with one line
+	-down image is loaded on mouse over, and action is triggered on press
+	-button has a __del__ method to clean up all it's stuff on exit
 	
--NPC chooses convo based on public record and room
--Dialog can update public record
-
--build floavors
--build some more rooms
-
--
+-text button sub-classes the general button and has an additional button.set text method which creates the label, 
 
 
--should: dynamically add the number of kim boxes based on number needed
-	-create and destry kim boxes on dialog creation
+
+-switching rooms drops the framerate and may cause death in california
+
+-switch rooms by player near location instead of keyboard commands
+
+-Escape exits when it should change room
+
+-center full-screen vertically
+
+-text boxes are not buttons
+
+
+-kim flashes on the start screen that he should not
+
+-general game engine needs:
+
+-toggle buttons: 
+	-image indicates state, no hover graphics
+	-function is called when toggled with the argument set = True/False
+	-optional set_active_label and set_inactive_label functions where each takes the same set of arguments
+		-including text string, font, font size, text box clearance to sprite edge...
 	
-	
--end game????
+-push buttons: 
+	-load pressed image on hover
+	-run function on mouse press
+	-optional set_active_label and set_inactive_label functions where each takes the same set of arguments
+		-including text string, font, font size, text box clearance to sprite edge...
+		
+DONE:
+-Change mouse_press to mouse_press everywhere

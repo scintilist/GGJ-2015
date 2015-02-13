@@ -7,6 +7,10 @@ from . import util
 from .player import Player
 from .dialog_boxes import *
 
+import gc
+import traceback
+import sys
+
 class Room:
 	def __init__(self, space_base = None, room_name = 'default_room', start_x = 50, start_y = 50):
 		self.space_base = space_base
@@ -76,8 +80,30 @@ class Room:
 			obj.update(dt)
 
 	def cleanup(self):
+		"""
+		print('All referrers to the player sprite')
+		refs = gc.get_referrers(self.player.sprite)
+		for referrer in refs:
+			print(type(referrer), '\n', referrer, '\n')
+		"""
+		# Try to remove references to self from all objects
+		for obj in self.objects:
+			try:
+				obj.sprite.delete()
+			except:
+				print('SPRITE NOT DELETED')
+				exc_type, exc_value, exc_traceback = sys.exc_info()
+				if exc_type:
+					traceback.print_exception(exc_type, exc_value, exc_traceback)
+					sys.exit()
+			if type(obj) is Player:
+				try:
+					obj.room = None
+					print(obj)
+				except:
+					pass
 		# Remove Event handlers
-		self.window.remove_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press)
+		self.window.remove_handlers(self.on_key_press, self.on_key_release, self.on_mouse_press, self.on_mouse_release)
 		# Store all necessary state
 		self.record[self.room_name]["player_pos"] = (self.player.x, self.player.y)
 	
@@ -94,7 +120,7 @@ class Room:
 				self.player.down_press()
 		elif symbol == key.ESCAPE:
 			self.space_base.change_room("menu")
-			print('menu room')
+			return True
 		return True # The buck stops here
 		
 	def on_key_release(self, symbol, modifier):
@@ -117,7 +143,7 @@ class Room:
 			# Try to call in layer order, then return True when handled
 			for obj in objs:
 				try:
-					obj.mouse_click(m_x, m_y)
+					obj.mouse_press(m_x, m_y)
 					self.pressed_object = obj
 					return True
 				except:

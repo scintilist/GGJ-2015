@@ -98,7 +98,7 @@ class KimDialog(GameObj):
 		self.visible = True
 		self.set_text_string(self.text_string)
 		
-	def mouse_click(self, x, y):
+	def mouse_press(self, x, y):
 		self.sprite.image = self.pressed_image
 
 	def mouse_release(self, x, y):

@@ -11,9 +11,9 @@ abs_width, abs_height = 1920, 1080
 config = Config(double_buffer=True, depth_size=0, sample_buffers=1, samples=8)
 
 window = pyglet.window.Window(config=config, 
-	fullscreen=True, # Fullscreen
-	#width = int(abs_width * g_scale),
-	#height = int(abs_height * g_scale),
+	#fullscreen=True, # Fullscreen
+	width = int(abs_width * g_scale),
+	height = int(abs_height * g_scale),
 	resizable = False,
 	)
 	
